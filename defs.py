@@ -3,13 +3,14 @@ Base Card Class
 """
 
 class Points(object):
+    """Contains all information regarding in-game points - action points and budget points."""
     def __init__(self, BP, APG, APP, APC, APM, APB):
-        self.BP = BP
-        self.APG = APG
-        self.APP = APP
-        self.APC = APC
-        self.APM = APM
-        self.APB = APB
+        self.BP = BP    # Budget Points
+        self.APG = APG  # Action Points: General
+        self.APP = APP  # Action Points: Physics
+        self.APC = APC  # Action Points: Chemistry
+        self.APM = APM  # Action Points: Mathematics
+        self.APB = APB  # Action Points: Biology
 
 
 class Card(object):
