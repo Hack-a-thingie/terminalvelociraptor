@@ -46,18 +46,33 @@ Ideas in the first "design document".
 - Ability Points can be used to play Action cards.
 
 - Categories of Action cards can be:
-	* Publishing
-	    [increases your Impact Factor]
-	* Grants
-	    [get Budget Slots or Budget Points]
+	* Gain IF
+	    [Conference] (could add temporal passive effects)
+	        1 BP + 2 AP -> 1 IF
+	        2 BP + 3 AP -> 3 IF
+	* Grants (minimum staff number required)
+	    [Big Grant] (req. 5)
+	        10 AP -> 1 BS + 3 IF + 2 BP
+	        15 AP -> 2 BS + 6 IF + 4 BP
+	    [Small Grant] (req. 1)
+	         3 AP -> 1 IF + 1 BP
 	* "Attacks"
-	    "kill" (offer job) other player's Staff (maybe temporally, "sickness")
-	    "discrediting" make them lose Impact Factor or Budget Slots,...]
+	    [Real job offer]    (kill staff)
+	    [Fabricate results] (decrease IF)
+	    [Lab explosion]     (decrease BP)
+	    [Distract]          (decrease AP of staff) (permanent/temporary)
+	    [Illness]           (disable staff) (permanent/temporary)
 	* Reaction cards (you can play 3 and have them ready to react to things your opponent does)
-	    "peer review"
+	    [Angry referee]     (halves other players IF)
 	    "denials" of Grants,...
-	    "counterhire"
-	    "citation" (when the other player publishes, you get some Impact Factor)
+	    [Deny publication]  5 BP
+	    [Deny grant]        4 BP
+	    [Deny conference]   3 BP
+	    [Deny hire]         2 BP
+
+	    [Counterhire]       # BP (can hire other player's hire of cost < #)
+
+	    [Cite me!]          5 AP + 1 BP (other player publishes, you get their IF/2)
 	
 - Gameplay
     BEGIN
@@ -73,6 +88,8 @@ Ideas in the first "design document".
             * Discard N cards from deck, and draw N-1 cards.
         OR
             * Play cards, as many as you want, up to existing AP and BP.
+        * 'Submit manuscript' action (1BP): main method of gaining IF.
+          Starting with high IF journals, and going down, randomly you publish or not, depending on added AP.
         * Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
 
 - End of game
