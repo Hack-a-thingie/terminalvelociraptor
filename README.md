@@ -21,16 +21,44 @@ Ideas in the first "design document".
 
 - Budget Points can be used to hire (play) Staff.
 
-- Staff have Ability Points (Phys, Bio, ...).
+- There are different kinds of Staff (even though these are just names and have no effect on gameplay):
+    * Undergrad             [AP: 1   / BP: 2  / #: 4]
+    * PhD student           [AP: 2,3 / BP: 3  / #: 3]
+    * Postdoc               [AP: 3,4 / BP: 6  / #: 2]
+    * Staff scientist       [AP: 4,5 / BP: 10 / #: 1]
+
+    Others that we might include later (or a few now)
+    * MSc student [between Undergrad and PhD student]
+    * Technician [similar to Postdoc]
+    * Visitor [it can really be anything, usually for a few turns]
+    * Research assistant [0 AP, but cool passive/active abilities]
+
+- Staff have Ability Points, which belong to 4 fields [associated to kind of different play styles]:
+    * Physics   (blue)  [increase Budget Slots]
+    * Chemistry (red)   [powerful attacks]
+    * Biology   (green) [higher Impact Factor]
+    * Maths     (white) [lots of low level staff]
+
+    Others we might include later are:
+    * Computer science
+    * Crackpot science
 
 - Ability Points can be used to play Action cards.
 
-- Action cards can (for instance):
-	* increase your maximum Budget Points available.
-	* raise you Impact Factor.
-	* increase number of Staff you can hire.
-	* other things...
+- Categories of Action cards can be:
+	* Publishing
+	    [increases your Impact Factor]
+	* Grants
+	    [get Budget Slots or Budget Points]
+	* "Attacks"
+	    "kill" (offer job) other player's Staff (maybe temporally, "sickness")
+	    "discrediting" make them lose Impact Factor or Budget Slots,...]
+	* Reaction cards (you can play 3 and have them ready to react to things your opponent does)
+	    "peer review"
+	    "denials" of Grants,...
+	    "counterhire"
+	    "citation" (when the other player publishes, you get some Impact Factor)
 
-- The winner is:
-	* The first to achieve X Impact Factor.
-	* Other conditions (win Nobel Prize,...)
+- End of game
+	* When a player reaches an Impact Factor of 30, they win.
+	* If a player reaches 0 Budget Slots.
