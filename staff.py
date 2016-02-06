@@ -20,11 +20,3 @@ class Staff(Card):
     def buffs(self, buff):
         self.abilities += buff
 
-
-
-
-
-# staff_card_Bob = Staff(name, cost, description, abilities)
-
-Mark = Staff("Mark, the intern", Points(1, 0, 0, 0, 0, 0), "Generic Physics undergrad", Points(0, 0, 1, 0, 0, 0))
-Bob = Staff("Bob", Points(1, 0, 0, 0, 0, 0), "Generic Maths undergrad", Points(0, 0, 0, 0, 0, 1))

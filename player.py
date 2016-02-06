@@ -14,8 +14,8 @@ class Player (object):
     def draw_card(self, deck):
         self.hand.add_card(deck.get_first_card())
 
-    def remove_from_hand(self, deck):
-        pass
+    def remove_from_hand(self, card_to_remove):
+        self.hand.remove_card(card_to_remove)
 
     def increase_bs_with_max(self, max):
         if self.bs < max:

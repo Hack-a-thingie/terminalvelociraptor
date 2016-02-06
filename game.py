@@ -28,7 +28,7 @@ gamedeck.add_card(Staff("Irina", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("John", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Karl", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Louise", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Mark", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Mark", zeropoints, "Generic Physics undergrad", zeropoints))
 gamedeck.add_card(Staff("Nadia", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Oriol", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Pete", zeropoints, "", zeropoints))
@@ -73,7 +73,17 @@ current_player.increase_bs_with_max(5)
 # Renew BP (by filling up to current BS).
 current_player.set_bp_to_bs()
 
+current_player.hand.show()
+
 current_player.hand.cards[0].play(current_player)
+
+current_player.hand.show()
+print 0
+current_player.unit.show()
+
+
+
+
 
 # Fire staff; pay staff.
 print current_player.get_staff_cost()
