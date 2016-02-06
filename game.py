@@ -1,15 +1,9 @@
 from staff import *
 from player import *
 from cardpile import *
+from publish import *
 
 import random
-
-def submit_manuscript(points):
-    total = points.APG + points.APP + points.APC + points.APM + points.APB
-    return total
-
-
-
 
 gamedeck = CardPile()
 
@@ -98,7 +92,7 @@ while not gamedeck.is_empty():
 
 #   thing = raw_input("[d] discard OR [p] play: ")
 #    thing = thing.lower()
-    thing = "d"
+    thing = "p"
 
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
@@ -106,7 +100,7 @@ while not gamedeck.is_empty():
         print "Discarding %d cards" % n_cards_discard
         for i in range(n_cards_discard):
             current_player.hand.cards.pop(0)
-            print "%s %s" % ( i, len(current_player.hand.cards) )
+            print "%s %s" % (i, len(current_player.hand.cards))
 
         for i in range(n_cards_discard-1):
             current_player.draw_card(gamedeck)
