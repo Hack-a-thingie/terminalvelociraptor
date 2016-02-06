@@ -50,29 +50,28 @@ Ideas in the first "design document".
 	    [Conference] (could add temporal passive effects)
 	        1 BP + 2 AP -> 1 IF
 	        2 BP + 3 AP -> 3 IF
-	* Grants (minimum staff number required)
-	    [Big Grant] (req. 5)
-	        10 AP -> 1 BS + 3 IF + 2 BP
-	        15 AP -> 2 BS + 6 IF + 4 BP
-	    [Small Grant] (req. 1)
-	         3 AP -> 1 IF + 1 BP
+	* Grants
+	    [Big Grant] (req. min 5 staff)
+	        10 AP -> 2 BS + 3 IF + 2 BP
+	        15 AP -> 4 BS + 6 IF + 4 BP
+	    [Small Grant] (req. min 1 staff)
+	         3 AP -> 1 IF + 2 BP
 	* "Attacks"
-	    [Real job offer]    (kill staff)
-	    [Fabricate results] (decrease IF)
-	    [Lab explosion]     (decrease BP)
-	    [Distract]          (decrease AP of staff) (permanent/temporary)
-	    [Illness]           (disable staff) (permanent/temporary)
+	    [Real job offer]    8 BP + 2 AP (kill staff)
+	    [Fabricate results] 10 AP (decrease 5 IF)
+	    [Lab explosion]     1 BP + 15 AP (decrease 1 BS)
+	    [Illness]           1 BP + 10 AP (disable staff) (permanent/temporary)
+	    [Distract]          1 BP + 5 AP (halve (round down) AP of staff) (permanent/temporary)
 	* Reaction cards (you can play 3 and have them ready to react to things your opponent does)
-	    [Angry referee]     (halves other players IF)
-	    "denials" of Grants,...
-	    [Deny publication]  5 BP
-	    [Deny grant]        4 BP
+	    [Angry referee]     2 BP + 4 AP (halves gain in IF)
+	    [Tag along]         3 BP (if other player goes to conference, you get the same effects)
+        [Counterhire]       # BP (can hire other player's hire of cost < #)
+	    [Cite me!]          5 AP + 1 BP (other player publishes, you get their gain in IF/2)
+	    [Deny grant]        5 BP
+	    [Deny publication]  4 BP
 	    [Deny conference]   3 BP
 	    [Deny hire]         2 BP
 
-	    [Counterhire]       # BP (can hire other player's hire of cost < #)
-
-	    [Cite me!]          5 AP + 1 BP (other player publishes, you get their IF/2)
 	
 - Gameplay
     BEGIN
