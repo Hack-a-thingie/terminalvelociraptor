@@ -58,10 +58,6 @@ Ideas in the first "design document".
 	    "denials" of Grants,...
 	    "counterhire"
 	    "citation" (when the other player publishes, you get some Impact Factor)
-
-- The winner is:
-	* The first to achieve X Impact Factor.
-	* Other conditions (win Nobel Prize,...)
 	
 - Gameplay
     BEGIN
@@ -77,7 +73,7 @@ Ideas in the first "design document".
             * Discard N cards from deck, and draw N-1 cards.
         OR
             * Play cards, as many as you want, up to existing AP and BP.
-        * Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
+        * Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD.
         
 =======
 - End of game
