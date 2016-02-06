@@ -17,7 +17,9 @@ Ideas in the first "design document".
 
 - Deck contains: Staff and Action cards.
 
-- Players have Budget Points to hire (play) Staff.
+- Players gain Budget Points every turn (up to a maxmimum).
+
+- Budget Points can be used to hire (play) Staff.
 
 - Staff have Ability Points (Phys, Bio, ...).
 
