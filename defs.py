@@ -47,65 +47,7 @@ class Action(Card):
     def play(self, player):
         self.effect()
 
-"""
-def my_action():
-    print 12
-
-my_action_card = Action("Adi's wrath", Points(0, 0, 0, 0, 0, 0), "", my_action)
-my_action_card.play(1)
-"""
-
-
-class CardPile (object):
-    def __init__(self):
-        self.cards = []
-
-    def add_card(self, card):
-        self.cards.append(card)
-
-    def get_first_card(self):
-        return self.cards.pop(0)
-
-    def shuffle(self):
-        random.shuffle(self.cards)
-
-    def __eq__(self, other):
-        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
 
 
 
-class Player (object):
-    def __init__(self):
-        self.hand = CardPile()
-        self.unit = CardPile()
-        self.reactions = CardPile()
-        self.points = Points(0, 0, 0, 0, 0, 0)
-        self.impact = 0
-        self.bs = 0
-
-    def draw_card(self, deck):
-        self.hand.add_card(deck.get_first_card())
-
-    def remove_from_hand(self, deck):
-        pass
-
-    def increase_bs_with_max(self, max):
-        if self.bs < max:
-            self.bs += 1
-
-    def set_bp_to_bs(self):
-        self.points.BP = self.bs
-
-    def get_staff_cost(self):
-        staff_cost = 0
-        for staff in self.unit.cards:
-            staff_cost += staff.cost.BP
-        return staff_cost
-
-    def get_staff_bp(self):
-        return self.Points(0)
-
-    def update_staff_abilities(self):
-        for staff in self.unit.cards:
-            self.Points += staff.abilities

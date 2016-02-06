@@ -3,8 +3,7 @@ whatever adi tried to do with the staff cards
 """
 
 
-from defs import *
-
+from cardpile import *
 
 class Staff(Card):
     def __init__(self, name, cost, description, abilities):

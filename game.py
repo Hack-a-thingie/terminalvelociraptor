@@ -1,5 +1,6 @@
-from defs import *
 from staff import *
+from player import *
+from cardpile import *
 
 import random
 
