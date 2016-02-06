@@ -14,6 +14,9 @@ class Points(object):
         self.APM = APM  # Action Points: Mathematics
         self.APB = APB  # Action Points: Biology
 
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
 
 class Card(object):
     def __init__(self, name, cost, description):
@@ -65,6 +68,11 @@ class CardPile (object):
 
     def shuffle(self):
         random.shuffle(self.cards)
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+
 
 
 class Player (object):
