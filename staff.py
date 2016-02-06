@@ -1,3 +1,8 @@
+"""
+whatever adi tried to do with the staff cards
+"""
+
+
 from defs import *
 
 
@@ -11,13 +16,13 @@ def __init__(self, name, cost, description, abilities):
 def play(self, player):
     self.played = True
     player.removefromhand(self)
-    player.addmember(self)
-    player.cost(self.cost)
+    player.unit.add_card(self)
     update(self, player)
 
 
 def update(self, player):
-    player.abilities(self.abilities)
+    player.points += self.abilities
+    player.staff_cost += self.cost
 
 
 def buffs(self, buff):
