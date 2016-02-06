@@ -17,9 +17,9 @@ Ideas in the first "design document".
 
 - Deck contains: Staff and Action cards.
 
-- Players gain Budget Points every turn (up to a maxmimum).
+- Players gain Budget Point Slots (BS) every turn (up to a maximum).
 
-- Budget Points can be used to hire (play) Staff.
+- Budget Points (BP) can be used to hire (play) Staff.
 
 - Staff have Ability Points (Phys, Bio, ...).
 
@@ -34,3 +34,20 @@ Ideas in the first "design document".
 - The winner is:
 	* The first to achieve X Impact Factor.
 	* Other conditions (win Nobel Prize,...)
+	
+- Gameplay
+    BEGIN
+        * Randomise player order
+        * Draw 5 cards each (from common pile)
+        * Initial BS: 1 (1st player), 2 (2nd player)
+       
+    TURN
+        * Gain 1 BS (up to a maximum of 5).  !! max val TBD
+        * Renew BP (by filling up to current BS). 
+        * Fire staff; pay staff.
+        EITHER
+            * Discard N cards from deck, and draw N-1 cards.
+        OR
+            * Play cards, as many as you want, up to existing AP and BP.
+        * Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
+        
