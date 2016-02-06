@@ -1,6 +1,9 @@
 from defs import *
 import random
 
+def submit_manuscript(points):
+    total = points.APG + points.APP + points.APC + points.APM + points.APB
+    return total
 
 
 
@@ -65,12 +68,18 @@ current_player.increase_bs_with_max(5)
 current_player.set_bp_to_bs()
 
 # Fire staff; pay staff.
+if current_player.get_staff_cost() < current_player.get_bp():
+    print "Not enough, you have to fire someone"
+    current_player.set_bp(0)
+else:
+    current_player.set_bp(current_player.get_bp() - current_player.get_staff_cost())
 
 # EITHER Discard N cards from deck, and draw N-1 cards.
 
 # OR Play cards, as many as you want, up to existing AP and BP.
 
 # 'Submit manuscript' action (1BP)
+submit_manuscript(zeropoints)
 
 # Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
 
