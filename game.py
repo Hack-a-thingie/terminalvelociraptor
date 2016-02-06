@@ -1,4 +1,6 @@
 from defs import *
+from staff import *
+
 import random
 
 def submit_manuscript(points):
@@ -10,32 +12,35 @@ def submit_manuscript(points):
 gamedeck = CardPile()
 
 zeropoints = Points(0, 0, 0, 0, 0, 0)
-gamedeck.add_card(Card("Alice", zeropoints, ""))
-gamedeck.add_card(Card("Bob", zeropoints, ""))
-gamedeck.add_card(Card("Carmen", zeropoints, ""))
-gamedeck.add_card(Card("David", zeropoints, ""))
-gamedeck.add_card(Card("Eva", zeropoints, ""))
-gamedeck.add_card(Card("Fabia", zeropoints, ""))
-gamedeck.add_card(Card("Gabriel", zeropoints, ""))
-gamedeck.add_card(Card("Herman", zeropoints, ""))
-gamedeck.add_card(Card("Irina", zeropoints, ""))
-gamedeck.add_card(Card("John", zeropoints, ""))
-gamedeck.add_card(Card("Karl", zeropoints, ""))
-gamedeck.add_card(Card("Louise", zeropoints, ""))
-gamedeck.add_card(Card("Mark", zeropoints, ""))
-gamedeck.add_card(Card("Nadia", zeropoints, ""))
-gamedeck.add_card(Card("Oriol", zeropoints, ""))
-gamedeck.add_card(Card("Pete", zeropoints, ""))
-gamedeck.add_card(Card("Queco", zeropoints, ""))
-gamedeck.add_card(Card("Ramon", zeropoints, ""))
-gamedeck.add_card(Card("Sarah", zeropoints, ""))
-gamedeck.add_card(Card("Tridib", zeropoints, ""))
-gamedeck.add_card(Card("Ulrich", zeropoints, ""))
-gamedeck.add_card(Card("Violeta", zeropoints, ""))
-gamedeck.add_card(Card("Wolfgang", zeropoints, ""))
-gamedeck.add_card(Card("Xavier", zeropoints, ""))
-gamedeck.add_card(Card("Yahir", zeropoints, ""))
-gamedeck.add_card(Card("Zelda", zeropoints, ""))
+
+zeropoints = Points(3, 3, 3, 3, 3, 3)
+
+gamedeck.add_card(Staff("Alice", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Bob", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Carmen", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("David", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Eva", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Fabia", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Gabriel", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Herman", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Irina", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("John", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Karl", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Louise", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Mark", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Nadia", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Oriol", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Pete", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Queco", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Ramon", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Sarah", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Tridib", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Ulrich", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Violeta", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Wolfgang", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Xavier", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Yahir", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Zelda", zeropoints, "", zeropoints))
 
 realplayer = Player()
 computer = Player()
@@ -67,12 +72,15 @@ current_player.increase_bs_with_max(5)
 # Renew BP (by filling up to current BS).
 current_player.set_bp_to_bs()
 
+current_player.hand.cards[0].play(current_player)
+
 # Fire staff; pay staff.
-if current_player.get_staff_cost() < current_player.get_bp():
+print current_player.get_staff_cost()
+if current_player.get_staff_cost() < current_player.points.BP:
     print "Not enough, you have to fire someone"
-    current_player.set_bp(0)
+    current_player.points.BP = 0
 else:
-    current_player.set_bp(current_player.get_bp() - current_player.get_staff_cost())
+    current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
 
 # EITHER Discard N cards from deck, and draw N-1 cards.
 

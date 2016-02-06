@@ -15,7 +15,7 @@ class Staff(Card):
 
     def play(self, player):
         self.played = True
-        player.removefromhand(self)
+        player.remove_from_hand(self)
         player.unit.add_card(self)
 
     def buffs(self, buff):

@@ -84,9 +84,11 @@ class Player (object):
         self.impact = 0
         self.bs = 0
 
-
     def draw_card(self, deck):
         self.hand.add_card(deck.get_first_card())
+
+    def remove_from_hand(self, deck):
+        pass
 
     def increase_bs_with_max(self, max):
         if self.bs < max:
@@ -98,7 +100,7 @@ class Player (object):
     def get_staff_cost(self):
         staff_cost = 0
         for staff in self.unit.cards:
-            staff_cost += staff.cost
+            staff_cost += staff.cost.BP
         return staff_cost
 
     def get_staff_bp(self):
