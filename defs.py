@@ -102,7 +102,7 @@ class Player (object):
 
     def get_staff_cost(self):
         staff_cost = 0
-        for staff in self.unit:
+        for staff in self.unit.cards:
             staff_cost += staff.cost
         return staff_cost
 
@@ -110,5 +110,5 @@ class Player (object):
         return self.Points(0)
 
     def update_staff_abilities(self):
-        for staff in self.unit:
+        for staff in self.unit.cards:
             self.Points += staff.abilities
