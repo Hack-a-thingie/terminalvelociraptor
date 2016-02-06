@@ -1,17 +1,19 @@
 
 import random
 
-journal_values = {}
-journal_values["Nature"] = [60, 20]
-journal_values["PRL"] = [40, 20]
-journal_values["PRA"] = [20, 20]
-journal_values["Zhurnal Eksperimental'noi i Teoreticheskoi Fiziki"] = [10, 20]
-journal_values["arxiv"] = [1, 20]
+journals = []
 
-journals = ["Nature", "PRL", "PRA", "Zhurnal Eksperimental'noi i Teoreticheskoi Fiziki", "arxiv"]
+journals.append(["Science", 80, 10])
+journals.append(["Nature", 60, 9])
+journals.append(["Physical Review Letters", 40, 7])
+journals.append(["New Journal of Physics", 20, 4])
+journals.append(["Physical Review A", 20, 3])
+journals.append(["Zhurnal Eksperimental'noi i Teoreticheskoi Fiziki", 10, 2])
+journals.append(["arxiv", 1, 1])
 
 def try_journal(name, value, param):
-    print "Trying in %s with %d..." % (name, value)
+
+    print "Trying in %s with %d..." % (name, value) ,
     if value > random.randrange(param):
         return True
     else:
@@ -20,8 +22,10 @@ def try_journal(name, value, param):
 def submit_manuscript(points):
     total = points.APG + points.APP + points.APC + points.APM + points.APB
     for journal in journals:
-        if try_journal(journal, total, journal_values[journal][0]):
-            print "ACCEPTED!"
-            return journal_values[journal][1]
+        if try_journal(journal[0], total, journal[1]):
+            print "\033[1;32;48mACCEPTED! \033[0m"
+            return journal[2]
+        else:
+            print "\033[1;31;48mREJECTED! \033[0m"
 
     return 0
