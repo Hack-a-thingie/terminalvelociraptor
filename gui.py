@@ -33,23 +33,36 @@ stdscreen.addch(0,78, curses.ACS_URCORNER)
 stdscreen.addch(23,78, curses.ACS_LRCORNER)
 
 # Defining borders
-hline = 11
+center_hline = 11
 vline = 59
-for i in range(1,79):
+for i in range(1,78):
     stdscreen.addch(0,i, curses.ACS_HLINE)
     stdscreen.addch(23, i, curses.ACS_HLINE)
+
+    # Drawing hlines
     if i < vline:
-        stdscreen.addch(hline, i, curses.ACS_HLINE)
+        stdscreen.addch(center_hline, i, curses.ACS_HLINE)
+        stdscreen.addch(21, i, curses.ACS_HLINE)
+        stdscreen.addch(19, i, curses.ACS_HLINE)
+        stdscreen.addch(2, i, curses.ACS_HLINE)
+        stdscreen.addch(4, i, curses.ACS_HLINE)
+
+    # Drawing vlines
     if i <= 22:
         stdscreen.addch(i, 0, curses.ACS_VLINE)
         stdscreen.addch(i, 78, curses.ACS_VLINE)
         stdscreen.addch(i, vline, curses.ACS_VLINE)
+
+    # Adding corners Top and Bottom
     if i == vline:
         stdscreen.addch(0, vline, curses.ACS_TTEE)
         stdscreen.addch(23, vline, curses.ACS_BTEE)
-    if i == hline:
+
+    # Adding corners Left and Right
+    if i == center_hline or i == 21 or i == 19 or i == 2 or i == 4:
         stdscreen.addch(i, 0, curses.ACS_LTEE)
         stdscreen.addch(i, vline, curses.ACS_RTEE)
+
         
 stdscreen.getch()
 
