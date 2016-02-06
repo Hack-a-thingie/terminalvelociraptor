@@ -58,10 +58,6 @@ Ideas in the first "design document".
 	    "denials" of Grants,...
 	    "counterhire"
 	    "citation" (when the other player publishes, you get some Impact Factor)
-
-- The winner is:
-	* The first to achieve X Impact Factor.
-	* Other conditions (win Nobel Prize,...)
 	
 - Gameplay
     BEGIN
