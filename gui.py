@@ -5,6 +5,9 @@
 # Purpose: This file has been created during the hack-a-thingie 2016 event and
 #          will be using curses to create the terminal ui for playing the game.
 #
+#   Notes: We need to implement the following:
+#              Hand, field, description, points
+#              functions by click
 #------------------------------------------------------------------------------#
 
 import curses
@@ -47,6 +50,9 @@ for i in range(1,78):
         stdscreen.addch(2, i, curses.ACS_HLINE)
         stdscreen.addch(4, i, curses.ACS_HLINE)
 
+    if i > vline:
+        stdscreen.addch(20, i, curses.ACS_HLINE)
+
     # Drawing vlines
     if i <= 22:
         stdscreen.addch(i, 0, curses.ACS_VLINE)
@@ -63,7 +69,13 @@ for i in range(1,78):
         stdscreen.addch(i, 0, curses.ACS_LTEE)
         stdscreen.addch(i, vline, curses.ACS_RTEE)
 
-        
+    if i == 20:
+        stdscreen.addch(i, vline, curses.ACS_LTEE)
+        stdscreen.addch(i, 78, curses.ACS_RTEE)
+
+# Placing Action command
+stdscreen.addstr(22, 67, "ACTION", curses.A_BOLD)
+
 stdscreen.getch()
 
 # Terminating curses:
