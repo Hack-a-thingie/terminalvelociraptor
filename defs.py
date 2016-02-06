@@ -88,7 +88,7 @@ class Player (object):
         self.points = Points(0, 0, 0, 0, 0, 0)
         self.impact = 0
         self.bs = 0
-        self.staff_cost = 0
+
 
     def draw_card(self, deck):
         self.hand.add_card(deck.get_first_card())
@@ -101,7 +101,14 @@ class Player (object):
         self.points.BP = self.bs
 
     def get_staff_cost(self):
-        return self.staff_cost
+        staff_cost = 0
+        for staff in self.unit:
+            staff_cost += staff.cost
+        return staff_cost
 
     def get_staff_bp(self):
         return self.Points(0)
+
+    def update_staff_abilities(self):
+        for staff in self.unit:
+            self.Points += staff.abilities

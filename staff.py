@@ -17,12 +17,6 @@ def play(self, player):
     self.played = True
     player.removefromhand(self)
     player.unit.add_card(self)
-    update(self, player)
-
-
-def update(self, player):
-    player.points += self.abilities
-    player.staff_cost += self.cost
 
 
 def buffs(self, buff):
