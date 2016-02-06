@@ -13,10 +13,9 @@ def submit_manuscript(points):
 gamedeck = CardPile()
 
 zeropoints = Points(0, 0, 0, 0, 0, 0)
+zeropoints = Points(1, 1, 1, 1, 1, 1)
 
-zeropoints = Points(3, 3, 3, 3, 3, 3)
-
-gamedeck.add_card(Staff("Alice", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Adi", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Bob", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Carmen", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("David", zeropoints, "", zeropoints))
@@ -66,39 +65,50 @@ players[1].bs = 2
 
 current_player = players[0]
 
-## FIRST TURN
-# Gain 1 BS (up to a maximum of 5).  !! max val TBD
-current_player.increase_bs_with_max(5)
-
-# Renew BP (by filling up to current BS).
-current_player.set_bp_to_bs()
-
-current_player.hand.show()
-
-current_player.hand.cards[0].play(current_player)
-
-current_player.hand.show()
-print 0
-current_player.unit.show()
 
 
+## TURN
+
+while not gamedeck.is_empty():
+    print "Cards in deck: %s" % len(gamedeck.cards)
+    print "Cards in realplayer hand: %s" % len(realplayer.hand.cards)
+    print "Cards in computer hand: %s" % len(computer.hand.cards)
+
+    # Gain 1 BS (up to a maximum of 5).  !! max val TBD
+    current_player.increase_bs_with_max(5)
+
+    # Renew BP (by filling up to current BS).
+    current_player.set_bp_to_bs()
 
 
+    # Fire staff; pay staff.
+    if current_player.get_staff_cost() > current_player.points.BP:
+        print "Not enough, you have to fire someone"
+        current_player.points.BP = 0
+        current_player.unit.cards.pop(0)
+    else:
+        current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
 
-# Fire staff; pay staff.
-print current_player.get_staff_cost()
-if current_player.get_staff_cost() < current_player.points.BP:
-    print "Not enough, you have to fire someone"
-    current_player.points.BP = 0
-else:
-    current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
+    # Draw a card.
+    current_player.draw_card(gamedeck)
 
-# EITHER Discard N cards from deck, and draw N-1 cards.
 
-# OR Play cards, as many as you want, up to existing AP and BP.
+    #todo = raw_input("[d] discard OR [p] play: ")
+    todo = "p"
+    todo = todo.lower()
+    if todo == "d":
+        # EITHER Discard N cards from deck, and draw N-1 cards.
+        print "DISCARD"
+        current_player.hand.cards.pop(0)
+    elif todo == "p":
+        # OR Play cards, as many as you want, up to existing AP and BP.
+        print "PLAY"
+        current_player.hand.cards[0].play(current_player)
 
-# 'Submit manuscript' action (1BP)
-submit_manuscript(zeropoints)
+    # 'Submit manuscript' action (1BP)
+    print type(current_player.get_staff_abilities())
+    print submit_manuscript(current_player.get_staff_abilities())
 
+print "GAME OVER"
 # Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
 

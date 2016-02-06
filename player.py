@@ -33,6 +33,8 @@ class Player (object):
     def get_staff_bp(self):
         return self.Points(0)
 
-    def update_staff_abilities(self):
+    def get_staff_abilities(self):
+        total = Points(0,0,0,0,0,0)
         for staff in self.unit.cards:
-            self.Points += staff.abilities
+            total += staff.abilities
+        return total

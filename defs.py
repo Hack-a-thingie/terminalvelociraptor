@@ -17,6 +17,14 @@ class Points(object):
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
+    def __add__(self, other):
+        return Points(self.BP + other.BP, \
+                      self.APG + other.APG, \
+                      self.APP + other.APP, \
+                      self.APC + other.APC, \
+                      self.APM + other.APM, \
+                      self.APB + other.APB)
+
 
 class Card(object):
     def __init__(self, name, cost, description):

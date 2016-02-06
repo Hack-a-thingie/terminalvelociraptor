@@ -83,6 +83,7 @@ Ideas in the first "design document".
         * Gain 1 BS (up to a maximum of 5).  !! max val TBD
         * Renew BP (by filling up to current BS). 
         * Fire staff; pay staff.
+        * Draw a card.
         EITHER
             * Discard N cards from deck, and draw N-1 cards.
         OR

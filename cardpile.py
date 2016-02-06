@@ -25,3 +25,6 @@ class CardPile (object):
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def is_empty(self):
+        return self.cards == []
