@@ -78,8 +78,7 @@ Ideas in the first "design document".
         OR
             * Play cards, as many as you want, up to existing AP and BP.
         * Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
-        
-=======
+
 - End of game
 	* When a player reaches an Impact Factor of 30, they win.
 	* If a player reaches 0 Budget Slots.
