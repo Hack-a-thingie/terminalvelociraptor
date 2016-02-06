@@ -10,6 +10,7 @@ def submit_manuscript(points):
 
 
 
+
 gamedeck = CardPile()
 
 zeropoints = Points(0, 0, 0, 0, 0, 0)
@@ -42,8 +43,8 @@ gamedeck.add_card(Staff("Xavier", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Yahir", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Zelda", zeropoints, "", zeropoints))
 
-realplayer = Player()
-computer = Player()
+realplayer = Player("PLAYER")
+computer = Player("CPU")
 
 
 ## INITIALISE GAME
@@ -63,23 +64,26 @@ for player in players:
 players[0].bs = 1
 players[1].bs = 2
 
-current_player = players[0]
+current_id = 1
 
 
-
-## TURN
-
+# TURN
 while not gamedeck.is_empty():
-    print "Cards in deck: %s" % len(gamedeck.cards)
-    print "Cards in realplayer hand: %s" % len(realplayer.hand.cards)
-    print "Cards in computer hand: %s" % len(computer.hand.cards)
+
+    current_id = (current_id + 1) % 2
+    current_player = players[current_id]
+
+    print " %s's TURN" % current_player.name
+
+    print " deck: %s" % len(gamedeck.cards) ,
+    print " %s hand: %s" % (realplayer.name, len(realplayer.hand.cards)) ,
+    print " %s hand: %s" % (computer.name, len(computer.hand.cards))
 
     # Gain 1 BS (up to a maximum of 5).  !! max val TBD
     current_player.increase_bs_with_max(5)
 
     # Renew BP (by filling up to current BS).
     current_player.set_bp_to_bs()
-
 
     # Fire staff; pay staff.
     if current_player.get_staff_cost() > current_player.points.BP:
@@ -92,21 +96,27 @@ while not gamedeck.is_empty():
     # Draw a card.
     current_player.draw_card(gamedeck)
 
+#   thing = raw_input("[d] discard OR [p] play: ")
+#    thing = thing.lower()
+    thing = "d"
 
-    #todo = raw_input("[d] discard OR [p] play: ")
-    todo = "p"
-    todo = todo.lower()
-    if todo == "d":
+    if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
-        print "DISCARD"
-        current_player.hand.cards.pop(0)
-    elif todo == "p":
+        n_cards_discard = random.randrange(len(current_player.hand.cards)-1)+1
+        print "Discarding %d cards" % n_cards_discard
+        for i in range(n_cards_discard):
+            current_player.hand.cards.pop(0)
+            print "%s %s" % ( i, len(current_player.hand.cards) )
+
+        for i in range(n_cards_discard-1):
+            current_player.draw_card(gamedeck)
+
+    elif thing == "p":
         # OR Play cards, as many as you want, up to existing AP and BP.
         print "PLAY"
         current_player.hand.cards[0].play(current_player)
 
     # 'Submit manuscript' action (1BP)
-    print type(current_player.get_staff_abilities())
     print submit_manuscript(current_player.get_staff_abilities())
 
 print "GAME OVER"

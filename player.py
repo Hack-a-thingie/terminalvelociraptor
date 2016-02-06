@@ -3,7 +3,8 @@ from cardpile import *
 
 
 class Player (object):
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.hand = CardPile()
         self.unit = CardPile()
         self.reactions = CardPile()
@@ -12,7 +13,13 @@ class Player (object):
         self.bs = 0
 
     def draw_card(self, deck):
-        self.hand.add_card(deck.get_first_card())
+        drawn_card = deck.get_first_card()
+        if drawn_card != 0:
+            self.hand.add_card(drawn_card)
+            return True
+        else:
+            print "Could not draw a card"
+            return False
 
     def remove_from_hand(self, card_to_remove):
         self.hand.remove_card(card_to_remove)

@@ -10,7 +10,10 @@ class CardPile (object):
         self.cards.append(card)
 
     def get_first_card(self):
-        return self.cards.pop(0)
+        if not self.is_empty():
+            return self.cards.pop(0)
+        else:
+            return 0
 
     def remove_card(self, card_to_remove):
         if card_to_remove in self.cards:
