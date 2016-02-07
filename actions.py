@@ -18,6 +18,8 @@ class Action(Card):
 
     def play(self, player):
         super(Action, self).play(player)
+        graveyard.add_card(self)
+
 
     @property
     def successMessage(self):
@@ -57,10 +59,7 @@ class BigGrant(Action):
         super(BigGrant, self).play(player)
         # TODO: Test trigger
         if self.is_playable(player):
-            # player.remove_from_hand(self)
-            # need to discard to graveyard - done in master function
-            # player.points = player.points - self.cost
-            player.points = player.points + self.effect
+            player.points += self.effect
             player.bs += self.bonusBS
             player.impact += self.bonusIF
             trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
@@ -109,8 +108,7 @@ class MediumGrant(Action):
         super(MediumGrant, self).play(player)
         # TODO: Test trigger
         if self.is_playable(player):
-            # player.points = player.points - self.cost
-            player.points = player.points + self.effect
+            player.points += self.effect
             player.bs += self.bonusBS
             player.impact += self.bonusIF
             trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
@@ -159,8 +157,7 @@ class SmallGrant(Action):
         super(SmallGrant, self).play(player)
         # TODO: Test trigger
         if self.is_playable(player):
-            # player.points = player.points - self.cost
-            player.points = player.points + self.effect
+            player.points += self.effect
             player.impact += self.bonusIF
             trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
             return True
@@ -219,8 +216,7 @@ class Workshop(Action):
         super(Workshop, self).play(player)
         # TODO: Test trigger
         if self.is_playable(player):
-            # player.points = player.points - self.cost
-            player.points = player.points + self.effect
+            player.points += self.effect
             player.impact += self.bonusIF
             trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
             return True
@@ -263,7 +259,7 @@ class Symposium(Action):
         super(Symposium, self).play(player)
         # TODO: Test trigger
         if self.is_playable(player):
-            player.points = player.points + self.effect
+            player.points += self.effect
             player.impact += self.bonusIF
             trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
             return True
@@ -307,7 +303,7 @@ class Conference(Action):
         super(Conference, self).play(player)
         # TODO: Test trigger
         if self.is_playable(player):
-            player.points = player.points + self.effect
+            player.points += self.effect
             player.impact += self.bonusIF
             trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
             return True
