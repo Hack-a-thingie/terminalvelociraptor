@@ -244,3 +244,53 @@ class Workshop(Action):
             return True
         else:
             return False
+
+class Symposium(Action):
+    """ Attend a workshop
+    """
+    def __init__(self):
+        name = "Attend a symposium"
+        cost = defs.Points(2, 4, 0, 0, 0, 0)
+        effect = defs.Points(0, 0, 0, 0, 0, 0)
+        self.bonusIF = 3
+        description = "Attend a symposium. Will take some of your time but may be useful.\n"\
+        "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
+        super(Symposium, self).__init__(name, cost, description, effect)
+
+    @property
+    def successMessage(self):
+        """
+        :return: Message which can be displayed in case of success
+        """
+        curP = random.randint(math.floor(len(people)/3), 2*math.floor(len(people)/3)+1)
+        return "Congratulations! You met a %s from one of the top universities!\n"\
+                "They told cool things about you there and your impact factor has significantly increased."%(people[curP])
+
+    @property
+    def failureMessage(self):
+        """
+        :return:  Message which can be displayed in case of failure
+        """
+        return "Unfortunately, you didn't meet anyone important."
+
+    # def is_playable(self, player):
+    #     """
+    #     :param player: The player who is attempting to play the card
+    #     :return: True if the card is ok to play and False otherwise
+    #     """
+    #     return True if player.points>=self.cost else False
+
+    def play(self, player):
+        """
+        :param player: Player who is playing the card
+        :return: True if success and False if failure
+        """
+        super(Symposium, self).play(player)
+        # TODO: Test trigger
+        if self.is_playable(player):
+            player.points = player.points + self.effect
+            player.impact += self.bonusIF
+            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
+            return True
+        else:
+            return False
