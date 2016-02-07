@@ -150,7 +150,7 @@ while turn < 5000 and not won:
     #     thing = raw_input("[d] discard OR [p] play: ")
     #     thing = thing.lower()
     # else:
-    thing = random.choice([p", "d"])
+    thing = random.choice(["p", "d"])
 
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
