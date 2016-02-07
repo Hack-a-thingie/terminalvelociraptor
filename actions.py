@@ -366,3 +366,48 @@ class RealJobOffer(Action):
             return True
         else:
             return False
+
+class FabricateResults(Action):
+    """ Offer a real job to one of the staff members of another player
+    """
+    def __init__(self):
+        name = "Fabricate results"
+        cost = defs.Points(0, 10, 0, 0, 0, 0)
+        effect = defs.Points(0, 0, 0, 0, 0, 0)
+        self.IFdamage = 5
+        description = "Attempt to fabricate your opponent's results.\n"\
+                      "It requires a lot of time and attention to details.\n"\
+        "Cost: %s. You opponent will lose %d impact factor."%(cost.__repr__(), self.IFdamage)
+        super(FabricateResults, self).__init__(name, cost, description, effect)
+
+    @property
+    def successMessage(self):
+        """
+        :return: Message which can be displayed in case of success
+        """
+        return "Congratulations! You have fabricated your opponent's results!"
+
+    @property
+    def failureMessage(self):
+        """
+        :return:  Message which can be displayed in case of failure
+        """
+        return "Unfortunately, the results you have carefully fabricated "\
+        "were shredded by a graduate student who thought those were random number generator's output."
+
+    def play(self, playerSource, playerTarget):
+        """
+        :param playerSource: Player who is playing the card
+        :param playerTarget: Player who is going to suffer the effects
+        :return: True if success and False if failure
+        """
+        super(FabricateResults, self).play(playerSource)
+        # TODO: Test trigger
+        if self.is_playable(playerSource):
+            playerSource.points = playerSource.points + self.effect
+            playerTarget.impact -= self.IFdamage
+            # TODO: Make sure this removal is reversible if we decide to implement some counters for this
+            trigger_happened(playerSource, trigger_dict["TRIGGER_FAB_RESULTS"])
+            return True
+        else:
+            return False
