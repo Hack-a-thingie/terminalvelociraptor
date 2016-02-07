@@ -4,9 +4,8 @@
 """
 whatever adi tried to do with the staff cards
 """
-
 import random
-from cardpile import *
+from defs import *
 from reactions import *
 
 

@@ -1,5 +1,6 @@
 
 from cardpile import *
+from deck import *
 
 players = []
 
@@ -19,6 +20,7 @@ class Player (object):
             self.hand.add_card(drawn_card)
             return True
         else:
+            # TODO: I think it does not make sense to have this here (see deck.get_first_card())
             print "Could not draw a card"
             return False
 
@@ -47,8 +49,10 @@ class Player (object):
             total += staff.abilities
         return total
 
-    def fire_someone(self, graveyard):
+    def fire_someone(self):
+        # TODO: remove graveyard
         graveyard.add_card(self.unit.cards.pop(0))
 
-    def discard_card(self, graveyard):
+    def discard_card(self):
+        # TODO: remove graveyard
         graveyard.add_card(self.hand.cards.pop(0))

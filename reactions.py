@@ -1,7 +1,7 @@
-import defs
-from player import *
 """This file contains the functionality of the Reaction cards"""
 
+from defs import *
+from player import *
 """
 TRIGGERS ARE:
     - Publishing a paper
@@ -58,6 +58,7 @@ class Reaction(Card):
 
     def reveal(self, player):
         player.reactions.remove_card(self)
+        graveyard.add_card(self)
         # TODO: need to discard to graveyard
         print self.effect
 
