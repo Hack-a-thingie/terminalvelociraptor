@@ -76,10 +76,12 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
     # Draw a card.
     current_player.draw_card(gamedeck)
 
-#   thing = raw_input("[d] discard OR [p] play: ")
-#    thing = thing.lower()
-
+    # if current_player is realplayer:
+    #     thing = raw_input("[d] discard OR [p] play: ")
+    #     thing = thing.lower()
+    # else:
     thing = random.choice(["p", "d"])
+
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
         n_cards_discard = random.randrange(len(current_player.hand.cards)-1)+1
@@ -99,12 +101,13 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
             print staff
 
     # 'Submit manuscript' action (1BP)
-    # print submit_manuscript(current_player.get_staff_abilities())
 
-    # thing = raw_input("Do you want to publish your.. 'results'? (1 BP) [y] yes OR [n] no: ")
-    # thing = thing.lower()
-
+    # if current_player is realplayer:
+    #     thing = raw_input("Do you want to publish your.. 'results'? (1 BP) [y] yes OR [n] no: ")
+    #     thing = thing.lower()
+    # else:
     thing = random.choice(["y", "n"])
+
     if thing == "y":
         if current_player.points.BP > 0:
             current_player.impact += submit_manuscript(current_player.get_staff_abilities());
