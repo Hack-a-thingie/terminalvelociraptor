@@ -2,9 +2,10 @@
 import math
 import defs
 from player import *
+from reactions import *
 """This file contains the functionality of the Action cards, such as attack, grants etc."""
 agencies = ["Grand Bullshit Foundation", "Schnobel Science Treasury", "Nippon Hikikomori Kyoukai", "Beggars-are-choosers Backwater Investment Co", "Uncle Sam Science Support", "Abu Douchebag Memorial Fund"]
-people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "accountant", "someone's relative", "undergraduate student", "master student", "PhD student", "professor", "manager", "dean", "Nobel prize laureate"]
+people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "accountant", "someone's relative", "undergraduate student", "master student", "PhD student", "postdoc", "professor", "manager", "dean", "Nobel prize laureate"]
 class Action(Card):
     """ Mother class for all action cards
     """
@@ -51,14 +52,15 @@ class BigGrant(Action):
         :return: True if success and False if failure
         """
         super(BigGrant, self).play(player)
-        # TODO: Add trigger
+        # TODO: Test trigger
         if self.is_playable(player):
             # player.remove_from_hand(self)
-            # TODO: need to discard to graveyard
+            # need to discard to graveyard - done in master function
             # player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.bs += self.bonusBS
             player.impact += self.bonusIF
+            trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
             return True
         else:
             return False
@@ -109,12 +111,13 @@ class MediumGrant(Action):
         :return: True if success and False if failure
         """
         super(MediumGrant, self).play(player)
-        # TODO: Add trigger
+        # TODO: Test trigger
         if self.is_playable(player):
             # player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.bs += self.bonusBS
             player.impact += self.bonusIF
+            trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
             return True
         else:
             return False
@@ -165,11 +168,12 @@ class SmallGrant(Action):
         :return: True if success and False if failure
         """
         super(SmallGrant, self).play(player)
-        # TODO: Add trigger
+        # TODO: Test trigger
         if self.is_playable(player):
             # player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.impact += self.bonusIF
+            trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
             return True
         else:
             return False
@@ -231,11 +235,12 @@ class Workshop(Action):
         :return: True if success and False if failure
         """
         super(Workshop, self).play(player)
-        # TODO: Add trigger
+        # TODO: Test trigger
         if self.is_playable(player):
             # player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.impact += self.bonusIF
+            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
             return True
         else:
             return False
