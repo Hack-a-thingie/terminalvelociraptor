@@ -5,7 +5,8 @@ from publish import *
 
 import random
 
-gamedeck = CardPile()
+graveyard = CardPile()
+gamedeck = Deck(graveyard)
 
 zeropoints = Points(0, 0, 0, 0, 0, 0)
 zeropoints = Points(1, 1, 1, 1, 1, 1)
@@ -58,20 +59,22 @@ for player in players:
 players[0].bs = 1
 players[1].bs = 2
 
-current_id = 1
-
 
 # TURN
-while not gamedeck.is_empty():
+turn = 0
+while not gamedeck.is_empty() and turn < 1000:
+    turn += 1
+    current_player = players[turn % 2]
 
-    current_id = (current_id + 1) % 2
-    current_player = players[current_id]
+    print "\n TURN %d: %s" % (turn, current_player.name)
 
-    print " %s's TURN" % current_player.name
+    print "deck: %s " % len(gamedeck.cards) ,
+    print "discard: %s " % len(graveyard.cards) ,
+    print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)) ,
+    print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
 
-    print " deck: %s" % len(gamedeck.cards) ,
-    print " %s hand: %s" % (realplayer.name, len(realplayer.hand.cards)) ,
-    print " %s hand: %s" % (computer.name, len(computer.hand.cards))
+    total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(computer.hand.cards) + len(computer.unit.cards)
+    print "TOTAL CARDS = %d" % total_cards
 
     # Gain 1 BS (up to a maximum of 5).  !! max val TBD
     current_player.increase_bs_with_max(5)
@@ -83,7 +86,7 @@ while not gamedeck.is_empty():
     if current_player.get_staff_cost() > current_player.points.BP:
         while current_player.get_staff_cost() > current_player.points.BP:
             print "Not enough, you have to fire someone"
-            current_player.fire_someone()
+            current_player.fire_someone(graveyard)
 
     current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
 
@@ -94,13 +97,12 @@ while not gamedeck.is_empty():
 #    thing = thing.lower()
 
     thing = random.choice(["p", "d"])
-    thing = "p"
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
         n_cards_discard = random.randrange(len(current_player.hand.cards)-1)+1
         print "Discarding %d cards" % n_cards_discard
         for i in range(n_cards_discard):
-            current_player.hand.cards.pop(0)
+            current_player.discard_card(graveyard)
             print "%s %s" % (i, len(current_player.hand.cards))
 
         for i in range(n_cards_discard-1):
@@ -110,13 +112,21 @@ while not gamedeck.is_empty():
         # OR Play cards, as many as you want, up to existing AP and BP.
         print "Playing card"
         current_player.hand.cards[0].play(current_player)
-        print "%s has now %d staff" % (current_player.name, len(current_player.unit.cards))
-        for staff in current_player.unit.cards:
-            print staff
+        #for staff in current_player.unit.cards:
+        #    print staff
 
     # 'Submit manuscript' action (1BP)
-    print submit_manuscript(current_player.get_staff_abilities())
+    #print submit_manuscript(current_player.get_staff_abilities())
 
-print "GAME OVER"
+print "\n\nGAME OVER\n\n"
+
+print "deck: %s " % len(gamedeck.cards),
+print "discard: %s " % len(graveyard.cards),
+print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
+print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
+
+total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(computer.hand.cards) + len(computer.unit.cards)
+print "TOTAL CARDS = %d" % total_cards
+
 # Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
 
