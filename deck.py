@@ -14,9 +14,7 @@ class Deck(CardPile):
             while not self.discardpile.is_empty():
                 self.add_card(self.discardpile.cards.pop(0))
 
-        card_to_give = self.cards.pop(0)
-
-        return card_to_give
+        return self.cards.pop(0)
 
 graveyard = CardPile()
 gamedeck = Deck(graveyard)

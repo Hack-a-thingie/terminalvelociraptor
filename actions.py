@@ -6,7 +6,7 @@ from player import *
 from reactions import *
 """This file contains the functionality of the Action cards, such as attack, grants etc."""
 agencies = ["Grand Bullshit Foundation", "Schnobel Science Treasury", "Nippon Hikikomori Kyoukai", "Beggars-are-choosers Backwater Investment Co", "Uncle Sam Science Support", "Abu Douchebag Memorial Fund"]
-people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "accountant", "someone's relative", "undergraduate student", "master student", "PhD student", "postdoc", "professor", "manager", "dean", "Nobel prize laureate"]
+people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "accountant", "someone's relative", "undergraduate student", "master student", "PhD student", "postdoc", "professor", "manager", "dean", "Nobel Prize laureate"]
 
 
 class Action(Card):
@@ -19,7 +19,6 @@ class Action(Card):
     def play(self, player):
         super(Action, self).play(player)
         graveyard.add_card(self)
-
 
     @property
     def successMessage(self):
@@ -58,14 +57,13 @@ class BigGrant(Action):
         """
         super(BigGrant, self).play(player)
         # TODO: Test trigger
-        if self.is_playable(player):
-            player.points += self.effect
-            player.bs += self.bonusBS
-            player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
-            return True
-        else:
-            return False
+        # TODO: add randomness?
+        player.points += self.effect
+        player.bs += self.bonusBS
+        player.impact += self.bonusIF
+        trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
+        print "[ACT]" + self.successMessage 
+
     @property
     def successMessage(self):
         """
@@ -107,14 +105,12 @@ class MediumGrant(Action):
         """
         super(MediumGrant, self).play(player)
         # TODO: Test trigger
-        if self.is_playable(player):
-            player.points += self.effect
-            player.bs += self.bonusBS
-            player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
-            return True
-        else:
-            return False
+        # TODO: add randomness?
+        player.points += self.effect
+        player.bs += self.bonusBS
+        player.impact += self.bonusIF
+        trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
+        print "[ACT]" + self.successMessage
 
     @property
     def successMessage(self):
@@ -156,13 +152,11 @@ class SmallGrant(Action):
         """
         super(SmallGrant, self).play(player)
         # TODO: Test trigger
-        if self.is_playable(player):
-            player.points += self.effect
-            player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
-            return True
-        else:
-            return False
+        # TODO: add randomness?
+        player.points += self.effect
+        player.impact += self.bonusIF
+        trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
+        print "[ACT]" + self.successMessage
 
     @property
     def successMessage(self):
@@ -215,13 +209,11 @@ class Workshop(Action):
         """
         super(Workshop, self).play(player)
         # TODO: Test trigger
-        if self.is_playable(player):
-            player.points += self.effect
-            player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
-            return True
-        else:
-            return False
+        # TODO: add randomness?
+        player.points += self.effect
+        player.impact += self.bonusIF
+        trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
+        print "[ACT]" + self.successMessage
 
 class Symposium(Action):
     """ Attend a symposium
@@ -258,13 +250,11 @@ class Symposium(Action):
         """
         super(Symposium, self).play(player)
         # TODO: Test trigger
-        if self.is_playable(player):
-            player.points += self.effect
-            player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
-            return True
-        else:
-            return False
+        # TODO: add randomness?
+        player.points += self.effect
+        player.impact += self.bonusIF
+        trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
+        print "[ACT]" + self.successMessage
 
 class Conference(Action):
     """ Attend a workshop
@@ -311,13 +301,11 @@ class Conference(Action):
         """
         super(Conference, self).play(player)
         # TODO: Test trigger
-        if self.is_playable(player):
-            player.points += self.effect
-            player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
-            return True
-        else:
-            return False
+        # TODO: add randomness?
+        player.points += self.effect
+        player.impact += self.bonusIF
+        trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
+        print "[ACT]" + self.successMessage
 
 class RealJobOffer(Action):
     """ Offer a real job to one of the staff members of another player
@@ -348,7 +336,7 @@ class RealJobOffer(Action):
         return "Unfortunately, not everyone on this world can be bought with money!\n"\
                "You failed to tempt your opponent's staff."
 
-    def play(self, playerSource, playerTarget):
+    def play(self, playerSource):
         """
         :param playerSource: Player who is playing the card
         :param playerTarget: Player who is going to suffer the effects
@@ -356,16 +344,15 @@ class RealJobOffer(Action):
         """
         super(RealJobOffer, self).play(playerSource)
         # TODO: Test trigger
-        if self.is_playable(playerSource):
-            playerSource.points = playerSource.points + self.effect
-            # Random staff member gets lured away
-            self.affectedStaff = playerTarget.unit.select_random_card()
-            playerTarget.unit.remove_card(self.affectedStaff)
-            # TODO: Make sure this removal is reversible if we decide to implement some counters for this
-            trigger_happened(playerSource, trigger_dict["TRIGGER_JOB_OFFER"], 0)
-            return True
-        else:
-            return False
+        # TODO: add randomness?
+        playerSource.points = playerSource.points + self.effect
+        # Random staff member gets lured away
+        playerTarget = get_other_player(playerSource)
+        self.affectedStaff = playerTarget.unit.select_random_card()
+        playerTarget.unit.remove_card(self.affectedStaff)
+        # TODO: Make sure this removal is reversible if we decide to implement some counters for this
+        trigger_happened(playerSource, trigger_dict["TRIGGER_JOB_OFFER"], 0)
+        print "[ACT]" + self.successMessage 
 
 class FabricateResults(Action):
     """ Offer a real job to one of the staff members of another player
@@ -395,7 +382,7 @@ class FabricateResults(Action):
         return "Unfortunately, the results you have carefully fabricated "\
         "were shredded by a graduate student who thought those were random number generator's output."
 
-    def play(self, playerSource, playerTarget):
+    def play(self, playerSource):
         """
         :param playerSource: Player who is playing the card
         :param playerTarget: Player who is going to suffer the effects
@@ -403,11 +390,10 @@ class FabricateResults(Action):
         """
         super(FabricateResults, self).play(playerSource)
         # TODO: Test trigger
-        if self.is_playable(playerSource):
-            playerSource.points = playerSource.points + self.effect
-            playerTarget.impact -= self.IFdamage
-            # TODO: Make sure this removal is reversible if we decide to implement some counters for this
-            trigger_happened(playerSource, trigger_dict["TRIGGER_FAB_RESULTS"], 0)
-            return True
-        else:
-            return False
+        # TODO: add randomness?
+        playerSource.points = playerSource.points + self.effect
+        playerTarget = get_other_player(playerSource)
+        playerTarget.impact -= self.IFdamage
+        # TODO: Make sure this removal is reversible if we decide to implement some counters for this
+        trigger_happened(playerSource, trigger_dict["TRIGGER_FAB_RESULTS"], 0)
+        print "[ACT]" + self.successMessage

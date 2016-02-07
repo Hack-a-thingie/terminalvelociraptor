@@ -116,12 +116,14 @@ while turn < 5000 and not won:
     print "\n TURN %d: %s" % (turn, current_player.name)
 
     count_cards()
+    print "IFs:(%d, %d)" % (realplayer.impact, computer.impact)
 
     # Gain 1 BS (up to a maximum of 5).  !! max val TBD
     current_player.increase_bs_with_max(5)
 
     # Renew BP (by filling up to current BS).
-    current_player.set_bp_to_bs()
+    current_player.set_points_to_staff_and_bs()
+    print current_player.points
 
     # Fire staff; pay staff.
     if current_player.get_staff_cost() > current_player.points.BP:
@@ -130,6 +132,7 @@ while turn < 5000 and not won:
             current_player.fire_someone(graveyard)
 
     current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
+    current_player.get_staff_abilities()
 
     # Draw a card.
     current_player.draw_card(gamedeck)
@@ -138,7 +141,7 @@ while turn < 5000 and not won:
     #     thing = raw_input("[d] discard OR [p] play: ")
     #     thing = thing.lower()
     # else:
-    thing = random.choice(["p", "d"])
+    thing = "p"#random.choice(["p", "d"])
 
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
@@ -153,14 +156,14 @@ while turn < 5000 and not won:
 
     elif thing == "p":
         # OR Play cards, as many as you want, up to existing AP and BP.
-        selected_card = current_player.hand.cards[0]
+        selected_card = random.choice(current_player.hand.cards)
         if selected_card.is_playable(current_player):
-            print "Playing card " + selected_card.name
+            print "Playing card %s" % selected_card.name
             selected_card.play(current_player)
-            for staff in current_player.unit.cards:
-                print staff
+            #for staff in current_player.unit.cards:
+            #    print staff
         else:
-            print "Can't play card."
+            print "Can't play card %s" % selected_card.name
 
     # 'Submit manuscript' action (1BP)
 
@@ -172,11 +175,9 @@ while turn < 5000 and not won:
 
     if thing == "y":
         if current_player.points.BP > 0:
-            print "IFs:(%d, %d)" % (realplayer.impact, computer.impact)
-            journal_impact = submit_manuscript(current_player.get_staff_abilities())
+            journal_impact = submit_manuscript(player.points)
             current_player.impact += journal_impact
             trigger_happened(current_player, trigger_dict["TRIGGER_PUBLISH"], journal_impact)
-            print "IFs:(%d, %d)" % (realplayer.impact, computer.impact)
         else:
             print "Not enough budget."
 
@@ -198,6 +199,7 @@ while turn < 5000 and not won:
 print "\n\nGAME OVER\n\n"
 
 count_cards()
+print "IFs:(%d, %d)" % (realplayer.impact, computer.impact)
 
 # Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
 

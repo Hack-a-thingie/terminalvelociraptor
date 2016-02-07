@@ -4,6 +4,12 @@ from deck import *
 
 players = []
 
+def get_other_player(player):
+    for other_player in players:
+        if not other_player is player:
+            return other_player
+
+
 class Player (object):
     def __init__(self, name):
         self.name = name
@@ -31,8 +37,10 @@ class Player (object):
         if self.bs < max:
             self.bs += 1
 
-    def set_bp_to_bs(self):
-        self.points.BP = self.bs
+    def set_points_to_staff_and_bs(self):
+        self.points = Points(0,0,0,0,0,0)
+        self.points += self.get_staff_abilities()
+        self.points.BP += self.bs
 
     def get_staff_cost(self):
         staff_cost = 0

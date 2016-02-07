@@ -32,11 +32,6 @@ trigger_dict = {
     }
 
 
-def get_other_player(player):
-    for other_player in players:
-        if not other_player is player:
-            return other_player
-
 
 def trigger_happened(player, trigger, args):
     #print "%s has triggered %s!" % (player.name, trigger)
