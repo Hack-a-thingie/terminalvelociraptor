@@ -56,7 +56,8 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
     print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
     print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
 
-    total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(computer.hand.cards) + len(computer.unit.cards)
+    total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) \
+                  + len(computer.hand.cards) + len(computer.unit.cards)
     print "TOTAL CARDS = %d" % total_cards
 
     # Gain 1 BS (up to a maximum of 5).  !! max val TBD
@@ -76,10 +77,12 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
     # Draw a card.
     current_player.draw_card(gamedeck)
 
-#   thing = raw_input("[d] discard OR [p] play: ")
-#    thing = thing.lower()
-
+    # if current_player is realplayer:
+    #     thing = raw_input("[d] discard OR [p] play: ")
+    #     thing = thing.lower()
+    # else:
     thing = random.choice(["p", "d"])
+
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
         n_cards_discard = random.randrange(len(current_player.hand.cards)-1)+1
@@ -99,16 +102,17 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
             print staff
 
     # 'Submit manuscript' action (1BP)
-    # print submit_manuscript(current_player.get_staff_abilities())
 
-    # thing = raw_input("Do you want to publish your.. 'results'? (1 BP) [y] yes OR [n] no: ")
-    # thing = thing.lower()
-
+    # if current_player is realplayer:
+    #     thing = raw_input("Do you want to publish your.. 'results'? (1 BP) [y] yes OR [n] no: ")
+    #     thing = thing.lower()
+    # else:
     thing = random.choice(["y", "n"])
+
     if thing == "y":
         if current_player.points.BP > 0:
-            current_player.impact += submit_manuscript(current_player.get_staff_abilities());
-            trigger_happened(current_player,trigger_dict["TRIGGER_PUBLISH"])
+            current_player.impact += submit_manuscript(current_player.get_staff_abilities())
+            trigger_happened(current_player, trigger_dict["TRIGGER_PUBLISH"])
         else:
             print "Not enough budget."
 
@@ -134,7 +138,8 @@ print "discard: %s " % len(graveyard.cards),
 print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
 print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
 
-total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(computer.hand.cards) + len(computer.unit.cards)
+total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) \
+              + len(computer.hand.cards) + len(computer.unit.cards)
 print "TOTAL CARDS = %d" % total_cards
 
 # Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD

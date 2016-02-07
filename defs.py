@@ -1,8 +1,7 @@
 """
-definitions
+Definition of various classes
 """
 
-import random
 
 class Points(object):
     """Contains all information regarding in-game points - action points and budget points."""
@@ -18,34 +17,34 @@ class Points(object):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     def __add__(self, other):
-        return Points(self.BP + other.BP, \
-                      self.APG + other.APG, \
-                      self.APP + other.APP, \
-                      self.APC + other.APC, \
-                      self.APM + other.APM, \
+        return Points(self.BP + other.BP,
+                      self.APG + other.APG,
+                      self.APP + other.APP,
+                      self.APC + other.APC,
+                      self.APM + other.APM,
                       self.APB + other.APB)
 
     def __sub__(self, other):
-        return Points(self.BP - other.BP, \
-                      self.APG - other.APG, \
-                      self.APP - other.APP, \
-                      self.APC - other.APC, \
-                      self.APM - other.APM, \
+        return Points(self.BP - other.BP,
+                      self.APG - other.APG,
+                      self.APP - other.APP,
+                      self.APC - other.APC,
+                      self.APM - other.APM,
                       self.APB - other.APB)
 
     def __repr__(self):
         """ Convert the structure into an intelligible string. """
-        string = "BP: %d, APG: %d, APP: %d, "\
-                 "APC: %d, APM: %d, APB: %d" \
-                 %(self.BP, self.APG, self.APP, self.APC, self.APM, self.APB)
-        return string
+        return "BP: %d, APG: %d, APP: %d, "\
+               "APC: %d, APM: %d, APB: %d"\
+               % (self.BP, self.APG, self.APP, self.APC, self.APM, self.APB)
 
     def __ge__(self, other):
         """
         Overload >= operator
         """
-        return self.APB >= other.APB and self.APM >= other.APM and self.APC >= other.APC and self.APG >= other.APG and\
-        self.APP >= other.APP and self.BP >= other.BP
+        return self.APB >= other.APB and self.APM >= other.APM and self.APC >= other.APC and \
+               self.APG >= other.APG and self.APP >= other.APP and self.BP >= other.BP
+
 
 class Card(object):
     def __init__(self, name, cost, description):
@@ -54,17 +53,13 @@ class Card(object):
         self.description = description
 
     def play(self, player):
+        print("I should not have been called....")
         pass
 
-    def isPlayable(self, player):
+    def is_playable(self, player):
         """
         General method for checking if the card is playable under current conditions.
         Should be overloaded in each daughter class
         """
-        return True
-
-
-
-
-
-
+        print("I should not have been called....")
+        return False
