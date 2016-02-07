@@ -178,12 +178,12 @@ while turn < 5000 and not won:
     thing = random.choice(["y", "n"])
 
     if thing == "y":
-        if current_player.points.BP > 0:
-            journal_impact = submit_manuscript(player.points)
+        if current_player.points.BP > 0 and current_player.points.APG > 0:
+            journal_impact = submit_manuscript(current_player.points)
             current_player.impact += journal_impact
             trigger_happened(current_player, trigger_dict["TRIGGER_PUBLISH"], journal_impact)
         else:
-            print "Not enough budget."
+            print "Not enough budget or APG points."
 
     elif thing == "n":
         print "And you're calling yourself a PI.."
