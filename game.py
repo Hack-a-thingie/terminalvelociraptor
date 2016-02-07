@@ -10,15 +10,15 @@ from publish import *
 from deck import *
 
 def count_cards():
-    print "deck: %s " % len(gamedeck.cards),
-    print "discard: %s " % len(graveyard.cards),
-    print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
-    print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
+    print("deck: %s " % len(gamedeck.cards)),
+    print("discard: %s " % len(graveyard.cards)),
+    print("%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards))),
+    print("%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards)))
 
     total_cards = len(gamedeck.cards) + len(graveyard.cards) + \
                   len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(realplayer.reactions.cards) \
                   + len(computer.hand.cards) + len(computer.unit.cards) + len(computer.reactions.cards)
-    print "TOTAL CARDS = %d" % total_cards
+    print("TOTAL CARDS = %d" % total_cards)
 
 
 def rand_points(n):
@@ -109,12 +109,12 @@ players[1].bs = 2
 
 def play_card(selected_card):
     if selected_card.is_playable(current_player):
-        print "Playing card " + selected_card.name
+        print("Playing card " + selected_card.name)
         selected_card.play(current_player)
         #for staff in current_player.unit.cards:
         #    print staff
     else:
-        print "Can't play card " + selected_card.name
+        print("Can't play card " + selected_card.name)
 
 
 # TURN
@@ -123,22 +123,22 @@ while turn < 5000 and not won:
     turn += 1
     current_player = players[turn % 2]
 
-    print "\n TURN %d: %s" % (turn, current_player.name)
+    print("\n TURN %d: %s" % (turn, current_player.name))
 
     count_cards()
-    print "IFs:(%d, %d)" % (realplayer.impact, computer.impact)
+    print("IFs:(%d, %d)" % (realplayer.impact, computer.impact))
 
     # Gain 1 BS (up to a maximum of 5).  !! max val TBD
     current_player.increase_bs_with_max(5)
 
     # Renew BP (by filling up to current BS).
     current_player.set_points_to_staff_and_bs()
-    print current_player.points
+    print(current_player.points)
 
     # Fire staff; pay staff.
     if current_player.get_staff_cost() > current_player.points.BP:
         while current_player.get_staff_cost() > current_player.points.BP:
-            print "Not enough, you have to fire someone"
+            print("Not enough, you have to fire someone")
             current_player.fire_someone(graveyard)
 
     current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
@@ -155,10 +155,10 @@ while turn < 5000 and not won:
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
         n_cards_discard = random.randrange(len(current_player.hand.cards)-1)+1
-        print "Discarding %d cards" % n_cards_discard
+        print("Discarding %d cards" % n_cards_discard)
         for i in range(n_cards_discard):
             current_player.discard_card()
-            #print "%s %s" % (i, len(current_player.hand.cards))
+            #print("%s %s" % (i, len(current_player.hand.cards)))
 
         for i in range(n_cards_discard-1):
             current_player.draw_card(gamedeck)
@@ -183,27 +183,27 @@ while turn < 5000 and not won:
             current_player.impact += journal_impact
             trigger_happened(current_player, trigger_dict["TRIGGER_PUBLISH"], journal_impact)
         else:
-            print "Not enough budget or APG points."
+            print("Not enough budget or APG points.")
 
     elif thing == "n":
-        print "And you're calling yourself a PI.."
+        print("And you're calling yourself a PI..")
 
-    print "%s has now %d IF" % (current_player.name, current_player.impact)
+    print("%s has now %d IF" % (current_player.name, current_player.impact))
 
     # Win check
     for player in players:
         if player.impact >= 20:
             won = 1
-            print "%s has won since it now has %d IF. Woo!.." % (player.name, player.impact)
+            print("%s has won since it now has %d IF. Woo!.." % (player.name, player.impact))
 
         if player.bs == 0:
             won = 1
-            print "%s has lost as ran out of budget. Boo!.." % player.name
+            print("%s has lost as ran out of budget. Boo!.." % player.name)
 
-print "\n\nGAME OVER\n\n"
+print("\n\nGAME OVER\n\n")
 
 count_cards()
-print "IFs:(%d, %d)" % (realplayer.impact, computer.impact)
+print("IFs:(%d, %d)" % (realplayer.impact, computer.impact))
 
 # Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
 

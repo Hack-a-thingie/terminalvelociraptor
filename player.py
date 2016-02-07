@@ -27,7 +27,7 @@ class Player (object):
             return True
         else:
             # TODO: I think it does not make sense to have this here (see deck.get_first_card())
-            print "Could not draw a card"
+            print("Could not draw a card")
             return False
 
     def remove_from_hand(self, card_to_remove):

@@ -62,7 +62,7 @@ class BigGrant(Action):
         player.bs += self.bonusBS
         player.impact += self.bonusIF
         trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
-        print "[ACT]" + self.successMessage 
+        print("[ACT]" + self.successMessage)
 
     @property
     def successMessage(self):
@@ -110,7 +110,7 @@ class MediumGrant(Action):
         player.bs += self.bonusBS
         player.impact += self.bonusIF
         trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
-        print "[ACT]" + self.successMessage
+        print("[ACT]" + self.successMessage)
 
     @property
     def successMessage(self):
@@ -156,7 +156,7 @@ class SmallGrant(Action):
         player.points += self.effect
         player.impact += self.bonusIF
         trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
-        print "[ACT]" + self.successMessage
+        print("[ACT]" + self.successMessage)
 
     @property
     def successMessage(self):
@@ -213,7 +213,7 @@ class Workshop(Action):
         player.points += self.effect
         player.impact += self.bonusIF
         trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
-        print "[ACT]" + self.successMessage
+        print("[ACT]" + self.successMessage)
 
 class Symposium(Action):
     """ Attend a symposium
@@ -254,7 +254,7 @@ class Symposium(Action):
         player.points += self.effect
         player.impact += self.bonusIF
         trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
-        print "[ACT]" + self.successMessage
+        print("[ACT]" + self.successMessage)
 
 class Conference(Action):
     """ Attend a workshop
@@ -305,7 +305,7 @@ class Conference(Action):
         player.points += self.effect
         player.impact += self.bonusIF
         trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
-        print "[ACT]" + self.successMessage
+        print("[ACT]" + self.successMessage)
 
 class RealJobOffer(Action):
     """ Offer a real job to one of the staff members of another player
@@ -352,7 +352,7 @@ class RealJobOffer(Action):
         playerTarget.unit.remove_card(self.affectedStaff)
         # TODO: Make sure this removal is reversible if we decide to implement some counters for this
         trigger_happened(playerSource, trigger_dict["TRIGGER_JOB_OFFER"], 0)
-        print "[ACT]" + self.successMessage 
+        print("[ACT]" + self.successMessage)
 
 class FabricateResults(Action):
     """ Offer a real job to one of the staff members of another player
@@ -396,4 +396,4 @@ class FabricateResults(Action):
         playerTarget.impact -= self.IFdamage
         # TODO: Make sure this removal is reversible if we decide to implement some counters for this
         trigger_happened(playerSource, trigger_dict["TRIGGER_FAB_RESULTS"], 0)
-        print "[ACT]" + self.successMessage
+        print("[ACT]" + self.successMessage)
