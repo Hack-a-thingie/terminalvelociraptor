@@ -96,8 +96,8 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
         # OR Play cards, as many as you want, up to existing AP and BP.
         print "Playing card"
         current_player.hand.cards[0].play(current_player)
-        # for staff in current_player.unit.cards:
-        #    print staff
+        for staff in current_player.unit.cards:
+            print staff
 
     # 'Submit manuscript' action (1BP)
     # print submit_manuscript(current_player.get_staff_abilities())

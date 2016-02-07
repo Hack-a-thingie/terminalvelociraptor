@@ -19,18 +19,14 @@ class Action(Card):
         """
         :return: Message which can be displayed in case of success
         """
-        curAg = random.randint(0, len(agencies)-1)
-        return "Congratulations! You managed to hit a score with the %s funding agency and got lots of money!"\
-        %(agencies[curAg])
+        return "Congratulation! Your action was successful"
 
     @property
     def failureMessage(self):
         """
         :return:  Message which can be displayed in case of failure
         """
-        curAg = random.randint(0, len(agencies)-1)
-        return "Alas! The %s funding agency decided you are lame and gave the money to someone else."\
-        %(agencies[curAg])
+        return "Booo you failed to execute the action."
 
 
 class BigGrant(Action):
@@ -40,10 +36,12 @@ class BigGrant(Action):
         cost = defs.Points(0, 15, 0, 0, 0, 0)
         effect = defs.Points(4, 0, 0, 0, 0, 0)
         self.bonusBS = 2
+        self.bonusIF = 6
         description = "Get greedy! Apply for a big grant from a big funding agency.\n"\
         "Requires a lot of lies, connections and time, but your lab is getting rich indeed if successful.\n"\
-        "Cost: %s.\nYou gain: %s and %d bonus budget slot%s"\
-                      %(cost.__repr__(), effect.__repr__(), self.bonusBS, '' if self.bonusBS == 1 else 's')
+        "Cost: %s.\nYou gain: %s, %d bonus budget slot%s and %d additional impact factor"\
+                      %(cost.__repr__(), effect.__repr__(), self.bonusBS, \
+                        '' if self.bonusBS == 1 else 's', self.bonusIF)
         super(BigGrant, self).__init__(name, cost, description, effect)
 
     def is_playable(self, player):
@@ -65,37 +63,80 @@ class BigGrant(Action):
             player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.bs += self.bonusBS
+            player.impact += self.bonusIF
+            return True
+        else:
+            return False
+    @property
+    def successMessage(self):
+        """
+        :return: Message which can be displayed in case of success
+        """
+        curAg = random.randint(0, len(agencies)-1)
+        return "Congratulations! You managed to hit a score with the %s funding agency and got lots of money!"\
+        %(agencies[curAg])
+
+    @property
+    def failureMessage(self):
+        """
+        :return:  Message which can be displayed in case of failure
+        """
+        curAg = random.randint(0, len(agencies)-1)
+        return "Alas! The %s funding agency decided you are lame and gave the money to someone else."\
+        %(agencies[curAg])
+
+class MediumGrant(Action):
+    """ Apply for a medium grant. Costs quite a bit of time, but results in decent budget increase
+    """
+    def __init__(self):
+        name = 'Apply for a Medium Grant'
+        cost = defs.Points(0, 10, 0, 0, 0, 0)
+        effect = defs.Points(2, 0, 0, 0, 0, 0)
+        self.bonusBS = 2
+        self.bonusIF = 3
+        description = "Time to get stuffed! Apply for a medium grant from a funding agency.\n"\
+        "Requires some lies and time, but your lab gets well stocked if successful.\n"\
+        "Cost: %s.\nYou gain: %s, %d bonus budget slot%s and %d additional impact factor"\
+                      %(cost.__repr__(), effect.__repr__(), self.bonusBS, \
+                        '' if self.bonusBS == 1 else 's', self.bonusIF)
+        super(MediumGrant, self).__init__(name, cost, description, effect)
+
+    def isPlayable(self, player):
+        """
+        :param player: The player who is attempting to play the card
+        :return: True if the card is ok to play and False otherwise
+        """
+        return True if player.points>=self.cost else False
+
+    def play(self, player):
+        """
+        :param player: Player who is playing the card
+        :return: True if success and False if failure
+        """
+        # TODO: Add trigger
+        if self.isPlayable(player):
+            player.points = player.points - self.cost
+            player.points = player.points + self.effect
+            player.bs += self.bonusBS
+            player.impact += self.bonusIF
             return True
         else:
             return False
 
+    @property
+    def successMessage(self):
+        """
+        :return: Message which can be displayed in case of success
+        """
+        curAg = random.randint(0, len(agencies)-1)
+        return "Congratulations! You managed to convince the %s funding agency to give you a considerable sum of money!"\
+        %(agencies[curAg])
 
-
-
-def boom(self, player, dmg):
-    player.points.APB = player.points.APB - dmg
-    if player.points.APB < 0:
-        player.points.APB = 0
-
-
-Action.play = classmethod(boom)
-
-def my_action():
-    print 12
-
-my_action_card = Action("Adi's wrath", defs.Points(0, 0, 0, 0, 0, 0), "", my_action)
-#my_action_card.play(1)
-player1 = Player("Irina")
-player1.points.APB = 12
-print player1.points.APB
-grant = BigGrant()
-print grant.description
-resources = defs.Points(0,13,0,0,0, 0)
-player1.points = resources
-print resources
-print grant.cost
-print resources >=grant.cost
-if grant.play(player1):
-    print grant.successMessage
-else:
-    print grant.failureMessage
+    @property
+    def failureMessage(self):
+        """
+        :return:  Message which can be displayed in case of failure
+        """
+        curAg = random.randint(0, len(agencies)-1)
+        return "Alas! The %s funding agency decided you are lame and gave the money to someone else."\
+        %(agencies[curAg])
