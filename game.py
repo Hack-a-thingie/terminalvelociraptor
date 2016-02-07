@@ -1,6 +1,8 @@
 from staff import *
 from player import *
 from cardpile import *
+from actions import *
+from reactions import *
 from publish import *
 
 import random
@@ -12,7 +14,7 @@ zeropoints = Points(0, 0, 0, 0, 0, 0)
 zeropoints = Points(1, 1, 1, 1, 1, 1)
 
 gamedeck.add_card(Staff("Adi", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Bob", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Bensi", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Carmen", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("David", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Eva", zeropoints, "", zeropoints))
@@ -20,7 +22,7 @@ gamedeck.add_card(Staff("Fabia", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Gabriel", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Herman", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Irina", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("John", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("James", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Karl", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Louise", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Mark", zeropoints, "Generic Physics undergrad", zeropoints))
@@ -71,9 +73,9 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
 
     print "\n TURN %d: %s" % (turn, current_player.name)
 
-    print "deck: %s " % len(gamedeck.cards) ,
-    print "discard: %s " % len(graveyard.cards) ,
-    print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)) ,
+    print "deck: %s " % len(gamedeck.cards),
+    print "discard: %s " % len(graveyard.cards),
+    print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
     print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
 
     total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(computer.hand.cards) + len(computer.unit.cards)
