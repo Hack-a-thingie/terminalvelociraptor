@@ -9,9 +9,10 @@ people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "a
 class Action(Card):
     """ Mother class for all action cards
     """
-    def __init__(self, name, cost, description, effect):
+    def __init__(self, name, cost, description, trigger, effect):
         super(Action, self).__init__(name, cost, description)
         self.effect = effect
+        self.trigger = trigger
 
     def play(self, player):
         super(Action, self).play(player)
@@ -44,7 +45,8 @@ class BigGrant(Action):
         "Cost: %s.\nYou gain: %s, %d bonus budget slot%s and %d additional impact factor"\
                       %(cost.__repr__(), effect.__repr__(), self.bonusBS, \
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
-        super(BigGrant, self).__init__(name, cost, description, effect)
+        trigger = trigger_dict["TRIGGER_GRANT"]
+        super(BigGrant, self).__init__(name, cost, description, effect, trigger)
 
     def play(self, player):
         """
@@ -153,7 +155,8 @@ class SmallGrant(Action):
         "Requires a bit of time, but your lab gets some change from the grandma.\n"\
         "Cost: %s.\nYou gain: %s and %d additional impact factor"\
                       %(cost.__repr__(), effect.__repr__(), self.bonusIF)
-        super(SmallGrant, self).__init__(name, cost, description, effect)
+        trigger = trigger_dict["TRIGGER_GRANT"]
+        super(SmallGrant, self).__init__(name, cost, description, trigger, effect)
 
     # def is_playable(self, player):
     #     """
@@ -204,7 +207,8 @@ class Workshop(Action):
         self.bonusIF = 1
         description = "Attend a workshop. Doesn't cost much, but don't expect getting much out of it either.\n"\
         "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
-        super(Workshop, self).__init__(name, cost, description, effect)
+        trigger = trigger_dict["TRIGGER_CONFERENCE"]
+        super(Workshop, self).__init__(name, cost, description, trigger, effect)
 
     @property
     def successMessage(self):
@@ -255,7 +259,8 @@ class Symposium(Action):
         self.bonusIF = 3
         description = "Attend a symposium. Will take some of your time but may be useful.\n"\
         "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
-        super(Symposium, self).__init__(name, cost, description, effect)
+        trigger = trigger_dict["TRIGGER_CONFERENCE"]
+        super(Symposium, self).__init__(name, cost, description, trigger, effect)
 
     @property
     def successMessage(self):
