@@ -362,7 +362,7 @@ class RealJobOffer(Action):
             self.affectedStaff = playerTarget.unit.select_random_card()
             playerTarget.unit.remove_card(self.affectedStaff)
             # TODO: Make sure this removal is reversible if we decide to implement some counters for this
-            trigger_happened(playerSource, trigger_dict["TRIGGER_JOB_OFFER"])
+            trigger_happened(playerSource, trigger_dict["TRIGGER_JOB_OFFER"], 0)
             return True
         else:
             return False
@@ -407,7 +407,7 @@ class FabricateResults(Action):
             playerSource.points = playerSource.points + self.effect
             playerTarget.impact -= self.IFdamage
             # TODO: Make sure this removal is reversible if we decide to implement some counters for this
-            trigger_happened(playerSource, trigger_dict["TRIGGER_FAB_RESULTS"])
+            trigger_happened(playerSource, trigger_dict["TRIGGER_FAB_RESULTS"], 0)
             return True
         else:
             return False
