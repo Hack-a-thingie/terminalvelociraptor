@@ -1,13 +1,18 @@
-from staff import *
-from player import *
+import math
+import random
+from defs import *
 from cardpile import *
+from staff import *
 from actions import *
 from reactions import *
+from player import *
 from publish import *
-
 from deck import *
 
-import random
+
+
+graveyard = CardPile()
+gamedeck = Deck(graveyard)
 
 
 realplayer = Player("PLAYER")
@@ -20,9 +25,6 @@ players.append(computer)
 ## INITIALISE GAME
 
 # Initialise deck
-graveyard = CardPile()
-gamedeck = Deck(graveyard)
-
 initialise_deck(gamedeck)
 
 gamedeck.shuffle()

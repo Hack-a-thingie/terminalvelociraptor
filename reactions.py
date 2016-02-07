@@ -1,7 +1,7 @@
-import defs
-from player import *
 """This file contains the functionality of the Reaction cards"""
 
+from defs import *
+from player import *
 """
 TRIGGERS ARE:
     - Publishing a paper

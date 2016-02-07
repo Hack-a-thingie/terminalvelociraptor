@@ -1,7 +1,8 @@
-from defs import *
 from cardpile import *
 from staff import *
-from numpy import random
+from reactions import *
+from actions import *
+
 
 class Deck(CardPile):
     def __init__(self, discardpile):
@@ -28,7 +29,7 @@ def rand_points(n):
 
 
 def initialise_deck(gamedeck):
-    zeropoints = Points(0, 0, 0, 0, 0, 0)
+    zerocost = Points(0, 0, 0, 0, 0, 0)
     onecost = Points(1, 0, 0, 0, 0, 0)
 
     gamedeck.add_card(Staff("Adi", onecost, "", rand_points(4)))
@@ -57,6 +58,11 @@ def initialise_deck(gamedeck):
     gamedeck.add_card(Staff("Xavier", onecost, "", rand_points(4)))
     gamedeck.add_card(Staff("Yahir", onecost, "", rand_points(4)))
     gamedeck.add_card(Staff("Zelda", onecost, "", rand_points(4)))
-    for i in range(25):
+    for i in range(5):
         gamedeck.add_card(Reaction("Angry Referee", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_PUBLISH"], "I'M ANGRY!!!"))
         gamedeck.add_card(Reaction("I'm gonna make him an offer he can't refuse", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_HIRE"], "HIRE BLOCK!"))
+        gamedeck.add_card(SmallGrant())
+        gamedeck.add_card(MediumGrant())
+        gamedeck.add_card(BigGrant())
+        gamedeck.add_card(Workshop())
+        gamedeck.add_card(Symposium())

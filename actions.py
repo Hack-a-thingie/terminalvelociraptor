@@ -1,11 +1,14 @@
-#import random
+"""This file contains the functionality of the Action cards, such as attack, grants etc."""
+import random
 import math
 import defs
 from player import *
-from reactions import *
-"""This file contains the functionality of the Action cards, such as attack, grants etc."""
+
+
 agencies = ["Grand Bullshit Foundation", "Schnobel Science Treasury", "Nippon Hikikomori Kyoukai", "Beggars-are-choosers Backwater Investment Co", "Uncle Sam Science Support", "Abu Douchebag Memorial Fund"]
 people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "accountant", "someone's relative", "undergraduate student", "master student", "PhD student", "postdoc", "professor", "manager", "dean", "Nobel prize laureate"]
+
+
 class Action(Card):
     """ Mother class for all action cards
     """
