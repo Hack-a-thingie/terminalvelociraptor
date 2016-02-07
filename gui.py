@@ -11,10 +11,12 @@
 #------------------------------------------------------------------------------#
 
 import curses
-import _curses
+
+# Setting up small-scale game data to work with
+stafflist = ["Bob", "Alice", "Quantum Crypt"]
 
 # Set up standard screen
-stdscreen = curses.initscr()
+bg = curses.initscr()
 
 # Inhibits typing to screen
 curses.noecho()
@@ -23,63 +25,92 @@ curses.noecho()
 curses.cbreak()
 
 # Setting up keypad usage
-stdscreen.keypad(1)
+bg.keypad(1)
 
-begin_x = 20; begin_y = 7
-height = 5; width = 40
-win = curses.newwin(height, width, begin_y, begin_x)
+bg_x = 0
+bg_y = 0
+bg_h = 24
+bg_w = 80
+bg = curses.newwin(bg_h, bg_w, bg_y, bg_x)
 
 # Defining corners
-stdscreen.addch(0,0, curses.ACS_ULCORNER)
-stdscreen.addch(23,0, curses.ACS_LLCORNER)
-stdscreen.addch(0,78, curses.ACS_URCORNER)
-stdscreen.addch(23,78, curses.ACS_LRCORNER)
+bg.addch(0, 0, curses.ACS_ULCORNER)
+bg.addch(23, 0, curses.ACS_LLCORNER)
+bg.addch(0, curses.COLS - 2, curses.ACS_URCORNER)
+bg.addch(23, curses.COLS - 2, curses.ACS_LRCORNER)
 
 # Defining borders
 center_hline = 11
 vline = 59
-for i in range(1,78):
-    stdscreen.addch(0,i, curses.ACS_HLINE)
-    stdscreen.addch(23, i, curses.ACS_HLINE)
+for i in range(1,curses.COLS-2):
+    bg.addch(0, i, curses.ACS_HLINE)
+    bg.addch(23, i, curses.ACS_HLINE)
 
     # Drawing hlines
     if i < vline:
-        stdscreen.addch(center_hline, i, curses.ACS_HLINE)
-        stdscreen.addch(21, i, curses.ACS_HLINE)
-        stdscreen.addch(19, i, curses.ACS_HLINE)
-        stdscreen.addch(2, i, curses.ACS_HLINE)
-        stdscreen.addch(4, i, curses.ACS_HLINE)
+        bg.addch(center_hline, i, curses.ACS_HLINE)
+        bg.addch(21, i, curses.ACS_HLINE)
+        bg.addch(19, i, curses.ACS_HLINE)
+        bg.addch(2, i, curses.ACS_HLINE)
+        bg.addch(4, i, curses.ACS_HLINE)
 
     if i > vline:
-        stdscreen.addch(20, i, curses.ACS_HLINE)
+        bg.addch(20, i, curses.ACS_HLINE)
 
     # Drawing vlines
     if i <= 22:
-        stdscreen.addch(i, 0, curses.ACS_VLINE)
-        stdscreen.addch(i, 78, curses.ACS_VLINE)
-        stdscreen.addch(i, vline, curses.ACS_VLINE)
+        bg.addch(i, 0, curses.ACS_VLINE)
+        bg.addch(i, curses.COLS - 2, curses.ACS_VLINE)
+        bg.addch(i, vline, curses.ACS_VLINE)
 
     # Adding corners Top and Bottom
     if i == vline:
-        stdscreen.addch(0, vline, curses.ACS_TTEE)
-        stdscreen.addch(23, vline, curses.ACS_BTEE)
+        bg.addch(0, vline, curses.ACS_TTEE)
+        bg.addch(23, vline, curses.ACS_BTEE)
 
     # Adding corners Left and Right
     if i == center_hline or i == 21 or i == 19 or i == 2 or i == 4:
-        stdscreen.addch(i, 0, curses.ACS_LTEE)
-        stdscreen.addch(i, vline, curses.ACS_RTEE)
+        bg.addch(i, 0, curses.ACS_LTEE)
+        bg.addch(i, vline, curses.ACS_RTEE)
 
     if i == 20:
-        stdscreen.addch(i, vline, curses.ACS_LTEE)
-        stdscreen.addch(i, 78, curses.ACS_RTEE)
+        bg.addch(i, vline, curses.ACS_LTEE)
+        bg.addch(i, curses.COLS - 2, curses.ACS_RTEE)
 
 # Placing Action command
-stdscreen.addstr(22, 67, "ACTION", curses.A_BOLD)
+bg.addstr(22, 66, "ACTION", curses.A_BOLD)
 
-stdscreen.getch()
+bg.getch()
+
+# Add in a window for hand cards
+hand_x = vline + 1
+hand_y = 1
+hand_h = 23 -5
+hand_w = 18
+hand = curses.newwin(hand_h, hand_w, hand_y, hand_x)
+
+hand.move(0, 0)
+
+index = 0
+for i in range(len(stafflist)):
+    hand.addstr(i, 1, stafflist[i])
+    index = i
+
+while True:
+    if hand.getch() == ord("w"):
+        index = index - 1
+        if index < 0:
+            index = 0
+            hand.addstr(index, 1, stafflist[index], curses.A_REVERSE)
+        if index + 1 <= len(stafflist):
+            hand.addstr(index+1, 1, stafflist[index+1])
+        hand.refresh()
+    if hand.getch() == ord("q"):
+        break
+bg.getch()
 
 # Terminating curses:
 curses.nocbreak()
-stdscreen.keypad(0)
+bg.keypad(0)
 curses.echo()
 curses.endwin()
