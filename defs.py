@@ -32,6 +32,12 @@ class Points(object):
                  %(self.BP, self.APG, self.APP, self.APC, self.APM, self.APB)
         return string
 
+    def __ge__(self, other):
+        """
+        Overload >= operator
+        """
+        return self.APB >= other.APB and self.APM >= other.APM and self.APC >= other.APC and self.APG >= other.APG and\
+        self.APP >= other.APP and self.BP >= other.BP
 
 class Card(object):
     def __init__(self, name, cost, description):
@@ -54,13 +60,7 @@ class Reaction(Card):
         pass
 
 
-class Action(Card):
-    def __init__(self, name, cost, description, effect):
-        super(Action, self).__init__(name, cost, description)
-        self.effect = effect
 
-    def play(self, player):
-        self.effect()
 
 
 
