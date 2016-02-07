@@ -11,13 +11,15 @@ journals.append(["Physical Review A", 20, 3])
 journals.append(["Zhurnal Eksperimental'noi i Teoreticheskoi Fiziki", 10, 2])
 journals.append(["arxiv", 1, 1])
 
+
 def try_journal(name, value, param):
 
-    print "Trying in %s with %d..." % (name, value) ,
+    print "Trying in %s with %d..." % (name, value),
     if value > random.randrange(param):
         return True
     else:
         return False
+
 
 def submit_manuscript(points):
     total = points.APG + points.APP + points.APC + points.APM + points.APB

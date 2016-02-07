@@ -5,9 +5,10 @@
 whatever adi tried to do with the staff cards
 """
 
-
+import random
 from cardpile import *
 from reactions import *
+
 
 class Staff(Card):
     def __init__(self, name, cost, description, abilities):
@@ -27,11 +28,18 @@ class Staff(Card):
         return "\n  %s  \n  %s  \n╔═══╗\n║%s║\n%s" % (self.hat, self.face, self.category, abilities)
 
     def play(self, player):
-        self.abilities = self.original_abilities
-        player.remove_from_hand(self)
-        player.unit.add_card(self)
-        trigger_happened(player, trigger_dict["TRIGGER_HIRE"])
+        if self.is_playable(player):
+            player.remove_from_hand(self)
+            player.unit.add_card(self)
+            self.abilities = self.original_abilities
+            trigger_happened(player, trigger_dict["TRIGGER_HIRE"])
+            return True
+        else:
+            return False
 
     def buffs(self, buff):
         self.abilities += buff
+
+    def is_playable(self, player):
+        pass
 
