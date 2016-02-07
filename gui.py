@@ -19,15 +19,13 @@ from staff import *
 from actions import *
 from reactions import *
 
-FLAG = 1
+#def print(str):
+#    disp_message(str)
 
 # displays a message, front and center!
 def disp_message(message):
-    if FLAG == 0:
-        print message
-    if FLAG == 1:
         while True:
-            bg.addstr(11, 59 / 2 - len(message) / 2, message)
+            bg.addstr(11, int(59 / 2 - len(message) / 2), message)
             bgcomm = bg.getch()
             if bgcomm == ord(" "):
                 for i in range(1,59):
@@ -104,8 +102,8 @@ def choose_action(act, act_list, hand, hand_h, hand_w, bg, index):
                 hand.move(0,1)
                     
             elif actidx == 1:
-                #play_card(realplayer.hand.cards[index])
-                disp_message("yo")
+                play_card(realplayer.hand.cards[index])
+                #disp_message("yo")
                 for i in range(hand_w - 1):
                     for j in range(hand_h - 1):
                         hand.addch(j, i, " ")
@@ -173,9 +171,7 @@ vline = 59
 # We need to change the names of the staff to fit into our box:
 for i in range(len(handlist)):
     if len(handlist[i]) < 76 - vline:
-        print ("found")
         for j in range(76 - vline - len(handlist[i])):
-            print(j)
             handlist[i] = handlist[i] + ' '
     elif len(handlist[i]) > 76 - vline:
         handlist[i] = handlist[i][0:76 - vline]

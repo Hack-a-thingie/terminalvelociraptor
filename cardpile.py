@@ -15,7 +15,7 @@ class CardPile (object):
 
     def show(self):
         for card in self.cards:
-            print card.name
+            print(card.name)
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
