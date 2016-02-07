@@ -9,6 +9,16 @@ from player import *
 from publish import *
 from deck import *
 
+def count_cards():
+    print "deck: %s " % len(gamedeck.cards),
+    print "discard: %s " % len(graveyard.cards),
+    print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
+    print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
+
+    total_cards = len(gamedeck.cards) + len(graveyard.cards) + \
+                  len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(realplayer.reactions.cards) \
+                  + len(computer.hand.cards) + len(computer.unit.cards) + len(computer.reactions.cards)
+    print "TOTAL CARDS = %d" % total_cards
 
 
 def rand_points(n):
@@ -100,15 +110,7 @@ while turn < 5000 and not won:
 
     print "\n TURN %d: %s" % (turn, current_player.name)
 
-    print "deck: %s " % len(gamedeck.cards),
-    print "discard: %s " % len(graveyard.cards),
-    print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
-    print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
-
-    total_cards = len(gamedeck.cards) + len(graveyard.cards) + \
-                  len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(realplayer.reactions.cards) \
-                  + len(computer.hand.cards) + len(computer.unit.cards) + len(computer.reactions.cards)
-    print "TOTAL CARDS = %d" % total_cards
+    count_cards()
 
     # Gain 1 BS (up to a maximum of 5).  !! max val TBD
     current_player.increase_bs_with_max(5)
@@ -187,15 +189,7 @@ while turn < 5000 and not won:
 
 print "\n\nGAME OVER\n\n"
 
-print "deck: %s " % len(gamedeck.cards),
-print "discard: %s " % len(graveyard.cards),
-print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
-print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
-
-total_cards = len(gamedeck.cards) + len(graveyard.cards) + \
-              len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(realplayer.reactions.cards) \
-              + len(computer.hand.cards) + len(computer.unit.cards) + len(computer.reactions.cards)
-print "TOTAL CARDS = %d" % total_cards
+count_cards()
 
 # Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD
 
