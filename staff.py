@@ -15,8 +15,8 @@ class Staff(Card):
         self.original_abilities = abilities
         self.abilities = abilities
         self.category = random.choice(["PhD", "Udg", "MSc", "Doc", "Tch", "SSc", "Vis", "R.A"])
-        self.face = random.choice(["@", "Ô ", "Ō", "Ö", "Ò", "Ó", "Ø", "Õ", "█", "ð", "©", "®"])
-        self.hat = random.choice(["!", "? ", "$", ""])
+        self.face = random.choice(["@", "Ô ", "Ō", "Ö", "Ò", "Ó", "Ø", "Õ", "█", "ð", "©", "®", "Œ", "∆","Ω","◊"])
+        self.hat = random.choice(["!", "? ", "$", "", "_", "#", "~", ".", "†", "¬", "æ", "≈"])
 
     def __repr__(self):
         abilities = ""
