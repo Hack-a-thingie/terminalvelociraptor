@@ -25,6 +25,14 @@ class Points(object):
                       self.APM + other.APM, \
                       self.APB + other.APB)
 
+    @property
+    def toString(self):
+        """ Convert the structure into an intelligible string. """
+        string = "BP: %d, APG: %d, APP: %d, "\
+                 "APC: %d, APM: %d, APB: %d" \
+                 %(self.BP, self.APG, self.APP, self.APC, self.APM, self.APB)
+        return string
+
 
 class Card(object):
     def __init__(self, name, cost, description):
