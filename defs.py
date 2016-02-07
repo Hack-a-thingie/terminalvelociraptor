@@ -25,6 +25,14 @@ class Points(object):
                       self.APM + other.APM, \
                       self.APB + other.APB)
 
+    def __sub__(self, other):
+        return Points(self.BP - other.BP, \
+                      self.APG - other.APG, \
+                      self.APP - other.APP, \
+                      self.APC - other.APC, \
+                      self.APM - other.APM, \
+                      self.APB - other.APB)
+
     def __repr__(self):
         """ Convert the structure into an intelligible string. """
         string = "BP: %d, APG: %d, APP: %d, "\
@@ -47,6 +55,13 @@ class Card(object):
 
     def play(self, player):
         pass
+
+    def isPlayable(self, player):
+        """
+        General method for checking if the card is playable under current conditions.
+        Should be overloaded in each daughter class
+        """
+        return True
 
 
 
