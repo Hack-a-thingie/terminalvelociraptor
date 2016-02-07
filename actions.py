@@ -11,7 +11,7 @@ class BigGrant(defs.Action):
         description = "Get greedy! Apply for a big grant from a big funding agency.\n"\
         "Requires a lot of lies, connections and time, but your lab is getting rich indeed if successful.\n"\
         "Cost: %s.\nYou gain: %s and %d bonus budget slot%s"\
-                      %(cost.toString, effect.toString, bonusBS, '' if bonusBS == 1 else 's')
+                      %(cost.__repr__(), effect.__repr__(), bonusBS, '' if bonusBS == 1 else 's')
         super(BigGrant, self).__init__(name, cost, description, effect)
 
 def boom(self, player, dmg):
