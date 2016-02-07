@@ -26,7 +26,8 @@ trigger_dict = {
     "TRIGGER_PUBLISH"       : 1,
     "TRIGGER_HIRE"          : 2,
     "TRIGGER_GRANT"         : 3,
-    "TRIGGER_CONFERENCE"    : 4
+    "TRIGGER_CONFERENCE"    : 4,
+    "TRIGGER_JOB_OFFER"     : 5
     }
 
 

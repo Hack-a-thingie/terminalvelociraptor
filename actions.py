@@ -46,7 +46,7 @@ class BigGrant(Action):
                       %(cost.__repr__(), effect.__repr__(), self.bonusBS, \
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
         trigger = trigger_dict["TRIGGER_GRANT"]
-        super(BigGrant, self).__init__(name, cost, description, effect, trigger)
+        super(BigGrant, self).__init__(name, cost, description, trigger, effect)
 
     def play(self, player):
         """
@@ -98,7 +98,8 @@ class MediumGrant(Action):
         "Cost: %s.\nYou gain: %s, %d bonus budget slot%s and %d additional impact factor"\
                       %(cost.__repr__(), effect.__repr__(), self.bonusBS, \
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
-        super(MediumGrant, self).__init__(name, cost, description, effect)
+        trigger = trigger_dict["TRIGGER_GRANT"]
+        super(MediumGrant, self).__init__(name, cost, description, trigger, effect)
 
     def play(self, player):
         """
@@ -280,10 +281,13 @@ class Conference(Action):
         cost = defs.Points(3, 7, 0, 0, 0, 0)
         effect = defs.Points(0, 0, 0, 0, 0, 0)
         self.bonusIF = 5
+        self.neededIF = 5
         description = "Attend a conference. Time-consuming, but very useful networking event.\n"\
                       "Sometime they even provide free coffee!\n"\
-        "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
-        super(Conference, self).__init__(name, cost, description, effect)
+        "Cost: %s. You also have to have an impact factor more than %d to attend a conference.\n"\
+                      "You gain %d bonus impact factor."%(cost.__repr__(), self.neededIF,  self.bonusIF)
+        trigger = trigger_dict["TRIGGER_CONFERENCE"]
+        super(Conference, self).__init__(name, cost, description, trigger, effect)
 
     @property
     def successMessage(self):
@@ -301,6 +305,13 @@ class Conference(Action):
         """
         return "Unfortunately, you didn't meet anyone important."
 
+    def is_playable(self, player):
+        """
+        :param player: The player who uses the card
+        :return: True if the card is ok to play in current conditions, False otherwise
+        """
+        return player.impact > 5 and super(Conference, self).is_playable(player)
+
     def play(self, player):
         """
         :param player: Player who is playing the card
@@ -312,6 +323,55 @@ class Conference(Action):
             player.points = player.points + self.effect
             player.impact += self.bonusIF
             trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
+            return True
+        else:
+            return False
+
+class RealJobOffer(Action):
+    """ Offer a real job to one of the staff members of another player
+    """
+    def __init__(self):
+        name = "Offer a real job"
+        cost = defs.Points(8, 2, 0, 0, 0, 0)
+        effect = defs.Points(0, 0, 0, 0, 0, 0)
+        self.affectedStaff = None
+        description = "Attempt to lure one of your opponent's employee away "\
+                "by offering him a real high-pay job elsewhere.\n"\
+                      "This nasty move IS going to cost you money. A LOT of money. Use it wisely!\n"\
+        "Cost: %s. You opponent will lose one employee."%(cost.__repr__())
+        trigger = trigger_dict["TRIGGER_JOB_OFFER"]
+        super(RealJobOffer, self).__init__(name, cost, description, trigger, effect)
+
+    @property
+    def successMessage(self):
+        """
+        :return: Message which can be displayed in case of success
+        """
+        return "Congratulations! You managed to convince a %s to quit!"%(self.affectedStaff.name)
+
+    @property
+    def failureMessage(self):
+        """
+        :return:  Message which can be displayed in case of failure
+        """
+        return "Unfortunately, not everyone on this world can be bought with money!\n"\
+               "You failed to tempt your opponent's staff."
+
+    def play(self, playerSource, playerTarget):
+        """
+        :param playerSource: Player who is playing the card
+        :param playerTarget: Player who is going to suffer the effects
+        :return: True if success and False if failure
+        """
+        super(RealJobOffer, self).play(playerSource)
+        # TODO: Test trigger
+        if self.is_playable(playerSource):
+            playerSource.points = playerSource.points + self.effect
+            # Random staff member gets lured away
+            self.affectedStaff = playerTarget.unit.get_random_card()
+            playerTarget.unit.remove_card(self.affectedStaff)
+            # TODO: Make sure this removal is reversible if we decide to implement some counters for this
+            trigger_happened(playerSource, trigger_dict["TRIGGER_JOB_OFFER"])
             return True
         else:
             return False
