@@ -2,7 +2,7 @@ import random
 import defs
 from player import *
 """This file contains the functionality of the Action cards, such as attack, grants etc."""
-agencies = ["Grand Bullshit Foundation", "Schnobel Science Treasury", "Nippon Hikikomori Kyoukai"]
+agencies = ["Grand Bullshit Foundation", "Schnobel Science Treasury", "Nippon Hikikomori Kyoukai", "Beggars-are-choosers Backwater Investment Co", "Uncle Sam Science Support", "Abu Douchebag Memorial Fund"]
 
 class Action(Card):
     """ Mother class for all action cards
