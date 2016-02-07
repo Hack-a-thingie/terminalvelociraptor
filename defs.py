@@ -53,13 +53,14 @@ class Card(object):
         self.description = description
 
     def play(self, player):
-        print("I should not have been called....")
-        pass
+        print("THIS....")
+        if self.is_playable(player):
+            player.remove_from_hand(self)
+            player.points -= self.cost
 
     def is_playable(self, player):
         """
-        General method for checking if the card is playable under current conditions.
-        Should be overloaded in each daughter class
+        :param player: The player who is attempting to play the card
+        :return: True if the card is ok to play and False otherwise
         """
-        print("I should not have been called....")
-        return False
+        return True if player.points >= self.cost else False

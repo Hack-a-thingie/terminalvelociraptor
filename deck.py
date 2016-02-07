@@ -58,5 +58,5 @@ def initialise_deck(gamedeck):
     gamedeck.add_card(Staff("Yahir", onecost, "", rand_points(4)))
     gamedeck.add_card(Staff("Zelda", onecost, "", rand_points(4)))
     for i in range(25):
-        gamedeck.add_card(Reaction("Angry Referee", Points(0, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_PUBLISH"], "I'M ANGRY!!!"))
-        gamedeck.add_card(Reaction("I'm gonna make him an offer he can't refuse", Points(0, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_HIRE"], "HIRE BLOCK!"))
+        gamedeck.add_card(Reaction("Angry Referee", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_PUBLISH"], "I'M ANGRY!!!"))
+        gamedeck.add_card(Reaction("I'm gonna make him an offer he can't refuse", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_HIRE"], "HIRE BLOCK!"))

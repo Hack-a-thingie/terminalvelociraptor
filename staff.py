@@ -28,8 +28,9 @@ class Staff(Card):
         return "\n  %s  \n  %s  \n╔═══╗\n║%s║\n%s" % (self.hat, self.face, self.category, abilities)
 
     def play(self, player):
+        super(Staff, self).play(player)
+        print "AND THAT"
         if self.is_playable(player):
-            player.remove_from_hand(self)
             player.unit.add_card(self)
             self.abilities = self.original_abilities
             trigger_happened(player, trigger_dict["TRIGGER_HIRE"])
@@ -40,6 +41,4 @@ class Staff(Card):
     def buffs(self, buff):
         self.abilities += buff
 
-    def is_playable(self, player):
-        pass
 
