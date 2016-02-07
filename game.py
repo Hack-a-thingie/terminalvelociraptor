@@ -46,6 +46,9 @@ computer = Player("CPU")
 # Shuffle deck
 gamedeck.shuffle()
 
+# Game not won
+won = 0
+
 # Randomise player order
 players = [realplayer, computer]
 random.shuffle(players)
@@ -62,7 +65,7 @@ players[1].bs = 2
 
 # TURN
 turn = 0
-while not gamedeck.is_empty() and turn < 1000:
+while not gamedeck.is_empty() and turn < 1000 and not won:
     turn += 1
     current_player = players[turn % 2]
 
@@ -112,11 +115,11 @@ while not gamedeck.is_empty() and turn < 1000:
         # OR Play cards, as many as you want, up to existing AP and BP.
         print "Playing card"
         current_player.hand.cards[0].play(current_player)
-        #for staff in current_player.unit.cards:
+        # for staff in current_player.unit.cards:
         #    print staff
 
     # 'Submit manuscript' action (1BP)
-    #print submit_manuscript(current_player.get_staff_abilities())
+    # print submit_manuscript(current_player.get_staff_abilities())
 
     # thing = raw_input("Do you want to publish your.. 'results'? (1 BP) [y] yes OR [n] no: ")
     # thing = thing.lower()
@@ -133,15 +136,15 @@ while not gamedeck.is_empty() and turn < 1000:
 
     print "%s has now %d IF" % (current_player.name, current_player.impact)
 
-    if current_player.impact >= 10:
-        won = 1
-        print "%s has won since it now has %d IF. Woo!.." % (current_player.name, current_player.impact)
+    # Win check
+    for player in players:
+        if player.impact >= 10:
+            won = 1
+            print "%s has won since it now has %d IF. Woo!.." % (player.name, player.impact)
 
-    if current_player.bs == 0:
-        won = 1
-        other_id = (current_id + 1) % 2
-        other_player = players[other_id]
-        print "%s has won since %s ran out of budget. Boo!.." % (other_player.name, current_player.name)
+        if player.bs == 0:
+            won = 1
+            print "%s has lost as ran out of budget. Boo!.." % player.name
 
 print "\n\nGAME OVER\n\n"
 
