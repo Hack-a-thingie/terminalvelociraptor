@@ -7,6 +7,7 @@ whatever adi tried to do with the staff cards
 
 
 from cardpile import *
+from reactions import *
 
 class Staff(Card):
     def __init__(self, name, cost, description, abilities):
@@ -30,6 +31,7 @@ class Staff(Card):
         self.played = True
         player.remove_from_hand(self)
         player.unit.add_card(self)
+        trigger_happened(player,trigger_dict["TRIGGER_HIRE"])
 
     def buffs(self, buff):
         self.abilities += buff
