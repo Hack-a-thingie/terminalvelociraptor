@@ -5,47 +5,24 @@ from actions import *
 from reactions import *
 from publish import *
 
+from deck import *
+
 import random
 
-graveyard = CardPile()
-gamedeck = Deck(graveyard)
 
-zeropoints = Points(0, 0, 0, 0, 0, 0)
-zeropoints = Points(1, 1, 1, 1, 1, 1)
-
-gamedeck.add_card(Staff("Adi", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Bensi", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Carmen", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("David", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Eva", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Fabia", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Gabriel", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Herman", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Irina", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("James", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Karl", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Lee", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Mark", zeropoints, "Generic Physics undergrad", zeropoints))
-gamedeck.add_card(Staff("Nadia", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Oriol", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Pete", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Queco", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Ramon", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Sarah", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Thomas", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Ulrich", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Valentin", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Wolfgang", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Xavier", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Yahir", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Zelda", zeropoints, "", zeropoints))
 
 realplayer = Player("PLAYER")
 computer = Player("CPU")
 
 
 ## INITIALISE GAME
-# Shuffle deck
+
+# Initialise deck
+graveyard = CardPile()
+gamedeck = Deck(graveyard)
+
+initialise_deck(gamedeck)
+
 gamedeck.shuffle()
 
 # Game not won
@@ -140,7 +117,7 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
 
     # Win check
     for player in players:
-        if player.impact >= 10:
+        if player.impact >= 20:
             won = 1
             print "%s has won since it now has %d IF. Woo!.." % (player.name, player.impact)
 
