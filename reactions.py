@@ -29,6 +29,7 @@ trigger_dict = {
     "TRIGGER_CONFERENCE"    : 4
     }
 
+
 def trigger_happened(player, trigger):
     print "%s has triggered %s!" % (player.name, trigger)
     for other_player in players:
@@ -46,8 +47,9 @@ class Reaction(Card):
 
     def play(self, player):
         # TODO: Add trigger
+        super(Reaction, self).play(player)
         if self.is_playable(player):
-            player.remove_from_hand(self)
+            # player.remove_from_hand(self)
             player.reactions.add_card(self)
             return True
         else:

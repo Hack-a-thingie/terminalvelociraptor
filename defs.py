@@ -53,7 +53,6 @@ class Card(object):
         self.description = description
 
     def play(self, player):
-        print("THIS....")
         if self.is_playable(player):
             player.remove_from_hand(self)
             player.points -= self.cost

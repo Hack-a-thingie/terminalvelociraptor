@@ -29,7 +29,6 @@ class Staff(Card):
 
     def play(self, player):
         super(Staff, self).play(player)
-        print "AND THAT"
         if self.is_playable(player):
             player.unit.add_card(self)
             self.abilities = self.original_abilities
