@@ -101,7 +101,7 @@ class MediumGrant(Action):
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
         super(MediumGrant, self).__init__(name, cost, description, effect)
 
-    def isPlayable(self, player):
+    def is_playable(self, player):
         """
         :param player: The player who is attempting to play the card
         :return: True if the card is ok to play and False otherwise
@@ -114,7 +114,7 @@ class MediumGrant(Action):
         :return: True if success and False if failure
         """
         # TODO: Add trigger
-        if self.isPlayable(player):
+        if self.is_playable(player):
             player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.bs += self.bonusBS
@@ -156,7 +156,7 @@ class SmallGrant(Action):
                       %(cost.__repr__(), effect.__repr__(), self.bonusIF)
         super(SmallGrant, self).__init__(name, cost, description, effect)
 
-    def isPlayable(self, player):
+    def is_playable(self, player):
         """
         :param player: The player who is attempting to play the card
         :return: True if the card is ok to play and False otherwise
@@ -169,7 +169,7 @@ class SmallGrant(Action):
         :return: True if success and False if failure
         """
         # TODO: Add trigger
-        if self.isPlayable(player):
+        if self.is_playable(player):
             player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.impact += self.bonusIF
