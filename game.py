@@ -1,6 +1,8 @@
 from staff import *
 from player import *
 from cardpile import *
+from actions import *
+from reactions import *
 from publish import *
 
 import random
@@ -12,7 +14,7 @@ zeropoints = Points(0, 0, 0, 0, 0, 0)
 zeropoints = Points(1, 1, 1, 1, 1, 1)
 
 gamedeck.add_card(Staff("Adi", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Bob", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Bensi", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Carmen", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("David", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Eva", zeropoints, "", zeropoints))
@@ -20,9 +22,9 @@ gamedeck.add_card(Staff("Fabia", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Gabriel", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Herman", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Irina", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("John", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("James", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Karl", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Louise", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Lee", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Mark", zeropoints, "Generic Physics undergrad", zeropoints))
 gamedeck.add_card(Staff("Nadia", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Oriol", zeropoints, "", zeropoints))
@@ -30,9 +32,9 @@ gamedeck.add_card(Staff("Pete", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Queco", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Ramon", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Sarah", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Tridib", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Thomas", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Ulrich", zeropoints, "", zeropoints))
-gamedeck.add_card(Staff("Violeta", zeropoints, "", zeropoints))
+gamedeck.add_card(Staff("Valentin", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Wolfgang", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Xavier", zeropoints, "", zeropoints))
 gamedeck.add_card(Staff("Yahir", zeropoints, "", zeropoints))
@@ -45,6 +47,9 @@ computer = Player("CPU")
 ## INITIALISE GAME
 # Shuffle deck
 gamedeck.shuffle()
+
+# Game not won
+won = 0
 
 # Randomise player order
 players = [realplayer, computer]
@@ -62,15 +67,15 @@ players[1].bs = 2
 
 # TURN
 turn = 0
-while not gamedeck.is_empty() and turn < 1000:
+while not gamedeck.is_empty() and turn < 1000 and not won:
     turn += 1
     current_player = players[turn % 2]
 
     print "\n TURN %d: %s" % (turn, current_player.name)
 
-    print "deck: %s " % len(gamedeck.cards) ,
-    print "discard: %s " % len(graveyard.cards) ,
-    print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)) ,
+    print "deck: %s " % len(gamedeck.cards),
+    print "discard: %s " % len(graveyard.cards),
+    print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
     print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
 
     total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(computer.hand.cards) + len(computer.unit.cards)
@@ -112,11 +117,36 @@ while not gamedeck.is_empty() and turn < 1000:
         # OR Play cards, as many as you want, up to existing AP and BP.
         print "Playing card"
         current_player.hand.cards[0].play(current_player)
-        #for staff in current_player.unit.cards:
+        # for staff in current_player.unit.cards:
         #    print staff
 
     # 'Submit manuscript' action (1BP)
-    #print submit_manuscript(current_player.get_staff_abilities())
+    # print submit_manuscript(current_player.get_staff_abilities())
+
+    # thing = raw_input("Do you want to publish your.. 'results'? (1 BP) [y] yes OR [n] no: ")
+    # thing = thing.lower()
+
+    thing = random.choice(["y", "n"])
+    if thing == "y":
+        if current_player.points.BP > 0:
+            current_player.impact += submit_manuscript(current_player.get_staff_abilities());
+        else:
+            print "Not enough budget."
+
+    elif thing == "n":
+        print "And you're calling yourself a PI.."
+
+    print "%s has now %d IF" % (current_player.name, current_player.impact)
+
+    # Win check
+    for player in players:
+        if player.impact >= 10:
+            won = 1
+            print "%s has won since it now has %d IF. Woo!.." % (player.name, player.impact)
+
+        if player.bs == 0:
+            won = 1
+            print "%s has lost as ran out of budget. Boo!.." % player.name
 
 print "\n\nGAME OVER\n\n"
 
