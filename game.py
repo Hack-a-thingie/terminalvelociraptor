@@ -65,8 +65,13 @@ def initialise_deck(gamedeck):
         gamedeck.add_card(BigGrant())
         gamedeck.add_card(Workshop())
         gamedeck.add_card(Symposium())
+        gamedeck.add_card(Conference())
+        gamedeck.add_card(RealJobOffer())
+        gamedeck.add_card(FabricateResults())
     for i in range(5):
         gamedeck.add_card(AngryReferee())
+        gamedeck.add_card(Counterhire())
+        gamedeck.add_card(Citation())
 
 
 
@@ -167,9 +172,11 @@ while turn < 5000 and not won:
 
     if thing == "y":
         if current_player.points.BP > 0:
+            print "IFs:(%d, %d)" % (realplayer.impact, computer.impact)
             journal_impact = submit_manuscript(current_player.get_staff_abilities())
             current_player.impact += journal_impact
             trigger_happened(current_player, trigger_dict["TRIGGER_PUBLISH"], journal_impact)
+            print "IFs:(%d, %d)" % (realplayer.impact, computer.impact)
         else:
             print "Not enough budget."
 

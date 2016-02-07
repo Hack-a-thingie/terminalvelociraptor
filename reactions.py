@@ -44,6 +44,7 @@ def trigger_happened(player, trigger, args):
     for card in other_player.reactions.cards:
         if card.trigger == trigger:
             card.reveal(other_player, args)
+            break
 
 
 class Reaction(Card):
@@ -66,6 +67,25 @@ class Reaction(Card):
         else:
             return False
 
+class Citation(Reaction):
+    """ Apply to big grant card. Costs a lot but brings in lots of BP"""
+    def __init__(self):
+        name = 'Citation'
+        cost = Points(1, 0, 0, 0, 0, 0)
+        description = "You get half the other player's publication's IF. Cost: %s."\
+                      %(cost.__repr__())
+        super(Citation, self).__init__(name, cost, description, trigger_dict["TRIGGER_PUBLISH"])
+
+    def reveal(self, player, args):
+        """
+        :param player: Player who is playing the card
+        :return: True if success and False if failure
+        """
+        super(Citation, self).reveal(player, args)
+        player.impact += args//2
+        print("[REACT] The other player forces you to cite them!")
+
+
 class AngryReferee(Reaction):
     """ Apply to big grant card. Costs a lot but brings in lots of BP"""
     def __init__(self):
@@ -83,7 +103,28 @@ class AngryReferee(Reaction):
         super(AngryReferee, self).reveal(player, args)
         other_player = get_other_player(player)
         other_player.impact -= args//2
-        print("An angry referee halves the impact factor of your publication!")
+        print("[REACT] An angry referee halves the impact factor of your publication!")
 
 
-#gamedeck.add_card(Reaction("I'm gonna make him an offer he can't refuse", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_HIRE"]))
+class Counterhire(Reaction):
+    """ Apply to big grant card. Costs a lot but brings in lots of BP"""
+    def __init__(self):
+        name = 'Counterhire'
+        cost = Points(5, 0, 0, 0, 0, 0)
+        description = "Steals a new hire as it happens. Cost: %s."\
+                      %(cost.__repr__())
+        super(Counterhire, self).__init__(name, cost, description, trigger_dict["TRIGGER_HIRE"])
+
+    def reveal(self, player, args):
+        """
+        :param player: Player who is playing the card
+        :return: True if success and False if failure
+        """
+        super(Counterhire, self).reveal(player, args)
+        other_player = get_other_player(player)
+        other_player.unit.remove_card(args)
+        player.unit.remove_card(args)
+        print("[REACT] Your new hire went with to other unit! They received an offer they couldn't refuse...")
+
+
+#gamedeck.add_card(Reaction("", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_HIRE"]))
