@@ -107,6 +107,16 @@ players[0].bs = 1
 players[1].bs = 2
 
 
+def play_card(selected_card):
+    if selected_card.is_playable(current_player):
+        print "Playing card " + selected_card.name
+        selected_card.play(current_player)
+        #for staff in current_player.unit.cards:
+        #    print staff
+    else:
+        print "Can't play card " + selected_card.name
+
+
 # TURN
 turn = 0
 while turn < 5000 and not won:
@@ -132,7 +142,6 @@ while turn < 5000 and not won:
             current_player.fire_someone(graveyard)
 
     current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
-    current_player.get_staff_abilities()
 
     # Draw a card.
     current_player.draw_card(gamedeck)
@@ -141,7 +150,7 @@ while turn < 5000 and not won:
     #     thing = raw_input("[d] discard OR [p] play: ")
     #     thing = thing.lower()
     # else:
-    thing = "p"#random.choice(["p", "d"])
+    thing = random.choice([p", "d"])
 
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
@@ -156,14 +165,9 @@ while turn < 5000 and not won:
 
     elif thing == "p":
         # OR Play cards, as many as you want, up to existing AP and BP.
-        selected_card = random.choice(current_player.hand.cards)
-        if selected_card.is_playable(current_player):
-            print "Playing card %s" % selected_card.name
-            selected_card.play(current_player)
-            #for staff in current_player.unit.cards:
-            #    print staff
-        else:
-            print "Can't play card %s" % selected_card.name
+        selected_card = current_player.hand.cards[0]
+        play_card(selected_card)
+
 
     # 'Submit manuscript' action (1BP)
 
