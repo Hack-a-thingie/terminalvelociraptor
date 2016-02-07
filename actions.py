@@ -13,7 +13,7 @@ class Action(Card):
         self.effect = effect
 
     def play(self, player):
-        pass
+        super(Action, self).play(player)
 
     @property
     def successMessage(self):
@@ -45,23 +45,17 @@ class BigGrant(Action):
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
         super(BigGrant, self).__init__(name, cost, description, effect)
 
-    def is_playable(self, player):
-        """
-        :param player: The player who is attempting to play the card
-        :return: True if the card is ok to play and False otherwise
-        """
-        return True if player.points >= self.cost else False
-
     def play(self, player):
         """
         :param player: Player who is playing the card
         :return: True if success and False if failure
         """
+        super(BigGrant, self).play(player)
         # TODO: Add trigger
         if self.is_playable(player):
-            player.remove_from_hand(self)
+            # player.remove_from_hand(self)
             # TODO: need to discard to graveyard
-            player.points = player.points - self.cost
+            # player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.bs += self.bonusBS
             player.impact += self.bonusIF
@@ -102,21 +96,22 @@ class MediumGrant(Action):
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
         super(MediumGrant, self).__init__(name, cost, description, effect)
 
-    def is_playable(self, player):
-        """
-        :param player: The player who is attempting to play the card
-        :return: True if the card is ok to play and False otherwise
-        """
-        return True if player.points>=self.cost else False
+    # def is_playable(self, player):
+    #     """
+    #     :param player: The player who is attempting to play the card
+    #     :return: True if the card is ok to play and False otherwise
+    #     """
+    #     return True if player.points>=self.cost else False
 
     def play(self, player):
         """
         :param player: Player who is playing the card
         :return: True if success and False if failure
         """
+        super(MediumGrant, self).play(player)
         # TODO: Add trigger
         if self.is_playable(player):
-            player.points = player.points - self.cost
+            # player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.bs += self.bonusBS
             player.impact += self.bonusIF
@@ -157,21 +152,22 @@ class SmallGrant(Action):
                       %(cost.__repr__(), effect.__repr__(), self.bonusIF)
         super(SmallGrant, self).__init__(name, cost, description, effect)
 
-    def is_playable(self, player):
-        """
-        :param player: The player who is attempting to play the card
-        :return: True if the card is ok to play and False otherwise
-        """
-        return True if player.points>=self.cost else False
+    # def is_playable(self, player):
+    #     """
+    #     :param player: The player who is attempting to play the card
+    #     :return: True if the card is ok to play and False otherwise
+    #     """
+    #     return True if player.points>=self.cost else False
 
     def play(self, player):
         """
         :param player: Player who is playing the card
         :return: True if success and False if failure
         """
+        super(SmallGrant, self).play(player)
         # TODO: Add trigger
         if self.is_playable(player):
-            player.points = player.points - self.cost
+            # player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.impact += self.bonusIF
             return True
@@ -222,21 +218,22 @@ class Workshop(Action):
         """
         return "Unfortunately, you didn't meet anyone important."
 
-    def is_playable(self, player):
-        """
-        :param player: The player who is attempting to play the card
-        :return: True if the card is ok to play and False otherwise
-        """
-        return True if player.points>=self.cost else False
+    # def is_playable(self, player):
+    #     """
+    #     :param player: The player who is attempting to play the card
+    #     :return: True if the card is ok to play and False otherwise
+    #     """
+    #     return True if player.points>=self.cost else False
 
     def play(self, player):
         """
         :param player: Player who is playing the card
         :return: True if success and False if failure
         """
+        super(Workshop, self).play(player)
         # TODO: Add trigger
         if self.is_playable(player):
-            player.points = player.points - self.cost
+            # player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.impact += self.bonusIF
             return True
