@@ -94,7 +94,7 @@ while not gamedeck.is_empty():
 #    thing = thing.lower()
 
     thing = random.choice(["p", "d"])
-
+    thing = "p"
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
         n_cards_discard = random.randrange(len(current_player.hand.cards)-1)+1
@@ -111,6 +111,8 @@ while not gamedeck.is_empty():
         print "Playing card"
         current_player.hand.cards[0].play(current_player)
         print "%s has now %d staff" % (current_player.name, len(current_player.unit.cards))
+        for staff in current_player.unit.cards:
+            print staff
 
     # 'Submit manuscript' action (1BP)
     print submit_manuscript(current_player.get_staff_abilities())
