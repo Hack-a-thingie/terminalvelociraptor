@@ -31,36 +31,33 @@ trigger_dict = {
     }
 
 
-def trigger_happened(player, trigger):
-    print "%s has triggered %s!" % (player.name, trigger)
+def get_other_player(player):
     for other_player in players:
         if not other_player is player:
-            for card in other_player.reactions.cards:
-                if card.trigger == trigger:
-                    card.reveal(other_player)
+            return other_player
+
+
+def trigger_happened(player, trigger, args):
+    #print "%s has triggered %s!" % (player.name, trigger)
+    other_player = get_other_player(player)
+    for card in other_player.reactions.cards:
+        if card.trigger == trigger:
+            card.reveal(other_player, args)
 
 
 class Reaction(Card):
-    def __init__(self, name, cost, description, trigger, effect):
+    def __init__(self, name, cost, description, trigger):
         super(Reaction, self).__init__(name, cost, description)
         self.trigger = trigger
-        self.effect = effect
 
     def play(self, player):
         # TODO: Add trigger
         super(Reaction, self).play(player)
-        if self.is_playable(player):
-            # player.remove_from_hand(self)
-            player.reactions.add_card(self)
-            return True
-        else:
-            return False
+        player.reactions.add_card(self)
 
-    def reveal(self, player):
+    def reveal(self, player, args):
         player.reactions.remove_card(self)
         graveyard.add_card(self)
-        # TODO: need to discard to graveyard
-        print self.effect
 
     def is_playable(self, player):
         if player.points >= self.cost and len(player.reactions.cards) < 3:
@@ -68,3 +65,24 @@ class Reaction(Card):
         else:
             return False
 
+class AngryReferee(Reaction):
+    """ Apply to big grant card. Costs a lot but brings in lots of BP"""
+    def __init__(self):
+        name = 'Angry Referee'
+        cost = Points(5, 0, 0, 0, 0, 0)
+        description = "Halves a publication's IF. Cost: %s."\
+                      %(cost.__repr__())
+        super(AngryReferee, self).__init__(name, cost, description, trigger_dict["TRIGGER_PUBLISH"])
+
+    def reveal(self, player, args):
+        """
+        :param player: Player who is playing the card
+        :return: True if success and False if failure
+        """
+        super(AngryReferee, self).reveal(player, args)
+        other_player = get_other_player(player)
+        other_player.impact -= args//2
+        print("An angry referee halves the impact factor of your publication!")
+
+
+#gamedeck.add_card(Reaction("I'm gonna make him an offer he can't refuse", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_HIRE"]))

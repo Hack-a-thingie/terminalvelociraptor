@@ -60,13 +60,13 @@ def initialise_deck(gamedeck):
     gamedeck.add_card(Staff("Yahir", onecost, "", rand_points(4)))
     gamedeck.add_card(Staff("Zelda", onecost, "", rand_points(4)))
     for i in range(5):
-        gamedeck.add_card(Reaction("Angry Referee", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_PUBLISH"], "I'M ANGRY!!!"))
-        gamedeck.add_card(Reaction("I'm gonna make him an offer he can't refuse", Points(1, 0, 0, 0, 0, 0), "", trigger_dict["TRIGGER_HIRE"], "HIRE BLOCK!"))
         gamedeck.add_card(SmallGrant())
         gamedeck.add_card(MediumGrant())
         gamedeck.add_card(BigGrant())
         gamedeck.add_card(Workshop())
         gamedeck.add_card(Symposium())
+    for i in range(5):
+        gamedeck.add_card(AngryReferee())
 
 
 
@@ -167,8 +167,9 @@ while turn < 5000 and not won:
 
     if thing == "y":
         if current_player.points.BP > 0:
-            current_player.impact += submit_manuscript(current_player.get_staff_abilities())
-            trigger_happened(current_player, trigger_dict["TRIGGER_PUBLISH"])
+            journal_impact = submit_manuscript(current_player.get_staff_abilities())
+            current_player.impact += journal_impact
+            trigger_happened(current_player, trigger_dict["TRIGGER_PUBLISH"], journal_impact)
         else:
             print "Not enough budget."
 

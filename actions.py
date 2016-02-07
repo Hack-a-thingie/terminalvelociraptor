@@ -62,7 +62,7 @@ class BigGrant(Action):
             player.points += self.effect
             player.bs += self.bonusBS
             player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
+            trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
             return True
         else:
             return False
@@ -111,7 +111,7 @@ class MediumGrant(Action):
             player.points += self.effect
             player.bs += self.bonusBS
             player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
+            trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
             return True
         else:
             return False
@@ -159,7 +159,7 @@ class SmallGrant(Action):
         if self.is_playable(player):
             player.points += self.effect
             player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_GRANT"])
+            trigger_happened(player, trigger_dict["TRIGGER_GRANT"], 0)
             return True
         else:
             return False
@@ -218,7 +218,7 @@ class Workshop(Action):
         if self.is_playable(player):
             player.points += self.effect
             player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
+            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
             return True
         else:
             return False
@@ -261,7 +261,7 @@ class Symposium(Action):
         if self.is_playable(player):
             player.points += self.effect
             player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
+            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
             return True
         else:
             return False
@@ -314,7 +314,7 @@ class Conference(Action):
         if self.is_playable(player):
             player.points += self.effect
             player.impact += self.bonusIF
-            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
+            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"], 0)
             return True
         else:
             return False
@@ -359,7 +359,7 @@ class RealJobOffer(Action):
         if self.is_playable(playerSource):
             playerSource.points = playerSource.points + self.effect
             # Random staff member gets lured away
-            self.affectedStaff = playerTarget.unit.get_random_card()
+            self.affectedStaff = playerTarget.unit.select_random_card()
             playerTarget.unit.remove_card(self.affectedStaff)
             # TODO: Make sure this removal is reversible if we decide to implement some counters for this
             trigger_happened(playerSource, trigger_dict["TRIGGER_JOB_OFFER"])

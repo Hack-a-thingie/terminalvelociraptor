@@ -50,9 +50,7 @@ class Player (object):
         return total
 
     def fire_someone(self):
-        # TODO: remove graveyard
         graveyard.add_card(self.unit.cards.pop(0))
 
     def discard_card(self):
-        # TODO: remove graveyard
         graveyard.add_card(self.hand.cards.pop(0))
