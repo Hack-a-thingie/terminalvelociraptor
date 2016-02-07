@@ -1,9 +1,10 @@
-import random
+#import random
+import math
 import defs
 from player import *
 """This file contains the functionality of the Action cards, such as attack, grants etc."""
-agencies = ["Grand Bullshit Foundation", "Schnobel Science Treasury", "Nippon Hikikomori Kyoukai"]
-
+agencies = ["Grand Bullshit Foundation", "Schnobel Science Treasury", "Nippon Hikikomori Kyoukai", "Beggars-are-choosers Backwater Investment Co", "Uncle Sam Science Support", "Abu Douchebag Memorial Fund"]
+people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "accountant", "someone's relative", "undergraduate student", "master student", "PhD student", "professor", "manager", "dean", "Nobel prize laureate"]
 class Action(Card):
     """ Mother class for all action cards
     """
@@ -101,7 +102,7 @@ class MediumGrant(Action):
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
         super(MediumGrant, self).__init__(name, cost, description, effect)
 
-    def isPlayable(self, player):
+    def is_playable(self, player):
         """
         :param player: The player who is attempting to play the card
         :return: True if the card is ok to play and False otherwise
@@ -114,7 +115,7 @@ class MediumGrant(Action):
         :return: True if success and False if failure
         """
         # TODO: Add trigger
-        if self.isPlayable(player):
+        if self.is_playable(player):
             player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.bs += self.bonusBS
@@ -140,3 +141,104 @@ class MediumGrant(Action):
         curAg = random.randint(0, len(agencies)-1)
         return "Alas! The %s funding agency decided you are lame and gave the money to someone else."\
         %(agencies[curAg])
+
+class SmallGrant(Action):
+    """ Apply for a small grant. Costs some time and results in a humble budget increase
+    """
+    def __init__(self):
+        name = 'Apply for a Small Grant'
+        cost = defs.Points(0, 3, 0, 0, 0, 0)
+        effect = defs.Points(1, 0, 0, 0, 0, 0)
+        self.bonusIF = 1
+        description = "Time to beg for some pocket cash! Apply for a small grant"\
+                    "by asking for donations at the local science fair.\n"\
+        "Requires a bit of time, but your lab gets some change from the grandma.\n"\
+        "Cost: %s.\nYou gain: %s and %d additional impact factor"\
+                      %(cost.__repr__(), effect.__repr__(), self.bonusIF)
+        super(SmallGrant, self).__init__(name, cost, description, effect)
+
+    def is_playable(self, player):
+        """
+        :param player: The player who is attempting to play the card
+        :return: True if the card is ok to play and False otherwise
+        """
+        return True if player.points>=self.cost else False
+
+    def play(self, player):
+        """
+        :param player: Player who is playing the card
+        :return: True if success and False if failure
+        """
+        # TODO: Add trigger
+        if self.is_playable(player):
+            player.points = player.points - self.cost
+            player.points = player.points + self.effect
+            player.impact += self.bonusIF
+            return True
+        else:
+            return False
+
+    @property
+    def successMessage(self):
+        """
+        :return: Message which can be displayed in case of success
+        """
+        curAg = random.randint(0, len(agencies)-1)
+        return "Congratulations! You managed to look miserable enough so a grandma from %s funding agency gave you some coins!"\
+        %(agencies[curAg])
+
+    @property
+    def failureMessage(self):
+        """
+        :return:  Message which can be displayed in case of failure
+        """
+        return "Alas! Your alms box stays empty."
+
+class Workshop(Action):
+    """ Attend a workshop
+    """
+    def __init__(self):
+        name = "Attend a workshop"
+        cost = defs.Points(1, 2, 0, 0, 0, 0)
+        effect = defs.Points(0, 0, 0, 0, 0, 0)
+        self.bonusIF = 1
+        description = "Attend a workshop. Doesn't cost much, but don't expect getting much out of it either.\n"\
+        "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
+        super(Workshop, self).__init__(name, cost, description, effect)
+
+    @property
+    def successMessage(self):
+        """
+        :return: Message which can be displayed in case of success
+        """
+        curP = random.randint(0, math.floor(len(people)/2))
+        return "Congratulations! You met a %s from one of the top universities!\n"\
+                "Now people know you there and your impact factor has slightly increased."%(people[curP])
+
+    @property
+    def failureMessage(self):
+        """
+        :return:  Message which can be displayed in case of failure
+        """
+        return "Unfortunately, you didn't meet anyone important."
+
+    def is_playable(self, player):
+        """
+        :param player: The player who is attempting to play the card
+        :return: True if the card is ok to play and False otherwise
+        """
+        return True if player.points>=self.cost else False
+
+    def play(self, player):
+        """
+        :param player: Player who is playing the card
+        :return: True if success and False if failure
+        """
+        # TODO: Add trigger
+        if self.is_playable(player):
+            player.points = player.points - self.cost
+            player.points = player.points + self.effect
+            player.impact += self.bonusIF
+            return True
+        else:
+            return False
