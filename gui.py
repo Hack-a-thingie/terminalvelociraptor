@@ -13,6 +13,26 @@
 # coding: latin-1
 
 import curses
+'''
+from game import *
+from player import *
+from deck import *
+from cardpile import *
+from staff import *
+from actions import *
+from reactions import *
+'''
+
+def disp_message(bg, message):
+    while True:
+        bg.addstr(11, 59 / 2 - len(message) / 2, message)
+        bgcomm = bg.getch()
+        if bgcomm == ord(" "):
+            for i in range(1,59):
+                bg.addch(11,i, curses.ACS_HLINE)
+                bg.refresh()
+            break
+
 
 # This function places BP, BS and all AP
 def point_placement(BP, BS, phys, bio, chem, math, screen):
@@ -49,9 +69,10 @@ def point_placement(BP, BS, phys, bio, chem, math, screen):
     screen.refresh()
 
 # Chooses action
-def choose_action(act, act_list, hand, hand_h, hand_w):
+def choose_action(act, act_list, hand, hand_h, hand_w, bg):
     while True:
         playcomm = act.getch()
+        actidx = 1
             
         if playcomm == ord("w"):
             act.addstr(0, 6, act_list[-1], curses.A_REVERSE | curses.A_BOLD)
@@ -74,28 +95,32 @@ def choose_action(act, act_list, hand, hand_h, hand_w):
                 for i in range(hand_w - 1):
                     for j in range(hand_h - 1):
                         hand.addch(j, i, " ")
-                for i in range(len(stafflist)):
+                for i in range(len(handlist)):
                     if i == 0:
-                        hand.addstr(i, 1, stafflist[i], curses.A_REVERSE)
+                        hand.addstr(i, 1, handlist[i], curses.A_REVERSE)
                     else:
-                        hand.addstr(i, 1, stafflist[i])
+                        hand.addstr(i, 1, handlist[i])
                 hand.move(0,1)
                     
-            else:
+            elif actidx == 1:
                 pass
+                disp_message(bg, "hey")
                 for i in range(hand_w - 1):
                     for j in range(hand_h - 1):
                         hand.addch(j, i, " ")
-                for i in range(len(stafflist)):
+                for i in range(len(handlist)):
                     if i == 0:
-                        hand.addstr(i, 1, stafflist[i], curses.A_REVERSE)
+                        hand.addstr(i, 1, handlist[i], curses.A_REVERSE)
                     else:
-                        hand.addstr(i, 1, stafflist[i])
+                        hand.addstr(i, 1, handlist[i])
                 hand.move(0,1)
 
             act.refresh()
             break
 
+# These are additional functions that must be implemented that I do not have
+#def scroll_up();
+#def scroll_down();
 
 # creating dummy description:
 
@@ -103,6 +128,7 @@ description = "This card is awesome. it does a bunch of things and is super dupe
 
 # Setting up small-scale game data to work with
 staff = ["Bob", "Alice", "Quantum Crypt", '123456789012345678901234567890']
+#realplayer.unit.cards[].
 
 # Set up standard screen
 bg = curses.initscr()
@@ -130,7 +156,7 @@ bg = curses.newwin(bg_h, bg_w, bg_y, bg_x)
 #------------------------------------------------------------------------------#
 # Background and Hand Selection
 #------------------------------------------------------------------------------#
-# Note: stafflist may change form
+# Note: handlist may change form
 
 # Defining corners
 bg.addch(0, 0, curses.ACS_ULCORNER)
@@ -143,15 +169,15 @@ center_hline = 11
 vline = 59
 
 # We need to change the names of the staff to fit into our box:
-stafflist = staff
-for i in range(len(stafflist)):
-    if len(stafflist[i]) < 76 - vline:
+handlist = staff
+for i in range(len(handlist)):
+    if len(handlist[i]) < 76 - vline:
         print ("found")
-        for j in range(76 - vline - len(stafflist[i])):
+        for j in range(76 - vline - len(handlist[i])):
             print(j)
-            stafflist[i] = stafflist[i] + ' '
-    elif len(stafflist[i]) > 76 - vline:
-        stafflist[i] = stafflist[i][0:76 - vline]
+            handlist[i] = handlist[i] + ' '
+    elif len(handlist[i]) > 76 - vline:
+        handlist[i] = handlist[i][0:76 - vline]
 
 for i in range(1,curses.COLS-2):
     bg.addch(0, i, curses.ACS_HLINE)
@@ -203,11 +229,11 @@ hand = curses.newwin(hand_h, hand_w, hand_y, hand_x)
 hand.move(0, 0)
 
 index = 0
-for i in range(len(stafflist)):
+for i in range(len(handlist)):
     if i == 0:
-        hand.addstr(i, 1, stafflist[i], curses.A_REVERSE)
+        hand.addstr(i, 1, handlist[i], curses.A_REVERSE)
     else:
-        hand.addstr(i, 1, stafflist[i])
+        hand.addstr(i, 1, handlist[i])
 
 #------------------------------------------------------------------------------#
 # Passive Windows
@@ -323,18 +349,18 @@ while True:
         index = index - 1
         if index < 0:
             index = 0
-        hand.addstr(index, 1, stafflist[index], curses.A_REVERSE)
-        hand.addstr(prev, 1, stafflist[prev])
+        hand.addstr(index, 1, handlist[index], curses.A_REVERSE)
+        hand.addstr(prev, 1, handlist[prev])
         hand.move(index,1)
         hand.refresh()
 
     if command == ord("s"):
         prev = index
         index = index + 1
-        if index >= len(stafflist):
-            index = len(stafflist) - 1
-        hand.addstr(index, 1, stafflist[index], curses.A_REVERSE)
-        hand.addstr(prev, 1, stafflist[prev])
+        if index >= len(handlist):
+            index = len(handlist) - 1
+        hand.addstr(index, 1, handlist[index], curses.A_REVERSE)
+        hand.addstr(prev, 1, handlist[prev])
         hand.move(index,1)
         hand.refresh()
 
@@ -344,7 +370,7 @@ while True:
             act.addstr(0, 6, act_list[-1], curses.A_BOLD)
             act.addstr(1, 6, act_list[2], curses.A_BOLD | curses.A_REVERSE)   
             act.refresh()
-            hand.addstr(0, 1, stafflist[index], curses.A_REVERSE)
+            hand.addstr(0, 1, handlist[index], curses.A_REVERSE)
             for i in range(77-vline):
                 hand.addch(1,i, curses.ACS_HLINE)
             words = description.split()
@@ -368,7 +394,7 @@ while True:
             act_str = act_list[1]
 
             act.move(1,6)
-            choose_action(act, act_list, hand, hand_h, hand_w)
+            choose_action(act, act_list, hand, hand_h, hand_w, bg)
             index = 0
             prev = 0
 
