@@ -31,7 +31,7 @@ class Staff(Card):
         if self.is_playable(player):
             player.unit.add_card(self)
             self.abilities = self.original_abilities
-            trigger_happened(player, trigger_dict["TRIGGER_HIRE"])
+            trigger_happened(player, trigger_dict["TRIGGER_HIRE"], 0)
             return True
         else:
             return False

@@ -26,7 +26,7 @@ class CardPile (object):
     def shuffle(self):
         random.shuffle(self.cards)
 
-    def get_random_card(self):
+    def select_random_card(self):
         """
         :return: A random card from the pile
         """
