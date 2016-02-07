@@ -47,5 +47,8 @@ class Player (object):
             total += staff.abilities
         return total
 
-    def fire_someone(self):
-        self.unit.cards.pop(0)
+    def fire_someone(self, graveyard):
+        graveyard.add_card(self.unit.cards.pop(0))
+
+    def discard_card(self, graveyard):
+        graveyard.add_card(self.hand.cards.pop(0))

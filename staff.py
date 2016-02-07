@@ -18,9 +18,6 @@ class Staff(Card):
         self.face = random.choice(["@", "Ô ", "Ō", "Ö", "Ò", "Ó", "Ø", "Õ", "█", "ð", "©", "®"])
         self.hat = random.choice(["!", "? ", "$", ""])
 
-
-
-
     def __repr__(self):
         abilities = ""
         abilities += "\033[1;34;48mP\033[0m" * self.abilities.APP

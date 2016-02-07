@@ -9,18 +9,9 @@ class CardPile (object):
     def add_card(self, card):
         self.cards.append(card)
 
-    def get_first_card(self):
-        if not self.is_empty():
-            return self.cards.pop(0)
-        else:
-            return 0
-
     def remove_card(self, card_to_remove):
         if card_to_remove in self.cards:
             self.cards.remove(card_to_remove)
-
-    def shuffle(self):
-        random.shuffle(self.cards)
 
     def show(self):
         for card in self.cards:
@@ -31,3 +22,26 @@ class CardPile (object):
 
     def is_empty(self):
         return self.cards == []
+
+    def shuffle(self):
+        random.shuffle(self.cards)
+
+
+
+class Deck(CardPile):
+    def __init__(self, discardpile):
+        super(Deck, self).__init__()
+        self.discardpile = discardpile
+
+    def get_first_card(self):
+        if self.is_empty():
+            print "HOW DID THIS HAPPEN?"
+        else:
+            card_to_give = self.cards.pop(0)
+
+        if self.is_empty():
+            self.discardpile.shuffle()
+            while not self.discardpile.is_empty():
+                self.add_card(self.discardpile.cards.pop(0))
+
+        return card_to_give
