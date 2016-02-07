@@ -24,13 +24,18 @@ def setup_triggers():
 
 trigger_dict = {
     "TRIGGER_PUBLISH"       : 1,
-    "TRIGGER_GRANT"         : 2,
-    "TRIGGER_CONFERENCE"    : 3,
-    "TRIGGER_HIRE"          : 4
+    "TRIGGER_HIRE"          : 2,
+    "TRIGGER_GRANT"         : 3,
+    "TRIGGER_CONFERENCE"    : 4
     }
 
 def trigger_happened(player, trigger):
     print "%s has triggered %s!" % (player.name, trigger)
+    for other_player in players:
+        if not other_player is player:
+            for card in other_player.reactions.cards:
+                if card.trigger == trigger:
+                    card.reveal(other_player)
 
 
 class Reaction(Card):
@@ -40,5 +45,10 @@ class Reaction(Card):
         self.effect = effect
 
     def play(self, player):
-        # ...
-        pass
+        player.remove_from_hand(self)
+        player.reactions.add_card(self)
+
+    def reveal(self, player):
+        player.reactions.remove_card(self)
+        print self.effect
+
