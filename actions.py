@@ -3,7 +3,7 @@ import random
 import math
 import defs
 from player import *
-
+from reactions import *
 
 agencies = ["Grand Bullshit Foundation", "Schnobel Science Treasury", "Nippon Hikikomori Kyoukai", "Beggars-are-choosers Backwater Investment Co", "Uncle Sam Science Support", "Abu Douchebag Memorial Fund"]
 people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "accountant", "someone's relative", "undergraduate student", "master student", "PhD student", "postdoc", "professor", "manager", "dean", "Nobel prize laureate"]
@@ -12,10 +12,9 @@ people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "a
 class Action(Card):
     """ Mother class for all action cards
     """
-    def __init__(self, name, cost, description, trigger, effect):
+    def __init__(self, name, cost, description, effect):
         super(Action, self).__init__(name, cost, description)
         self.effect = effect
-        self.trigger = trigger
 
     def play(self, player):
         super(Action, self).play(player)
@@ -48,8 +47,7 @@ class BigGrant(Action):
         "Cost: %s.\nYou gain: %s, %d bonus budget slot%s and %d additional impact factor"\
                       %(cost.__repr__(), effect.__repr__(), self.bonusBS, \
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
-        trigger = trigger_dict["TRIGGER_GRANT"]
-        super(BigGrant, self).__init__(name, cost, description, effect, trigger)
+        super(BigGrant, self).__init__(name, cost, description, effect)
 
     def play(self, player):
         """
@@ -151,8 +149,7 @@ class SmallGrant(Action):
         "Requires a bit of time, but your lab gets some change from the grandma.\n"\
         "Cost: %s.\nYou gain: %s and %d additional impact factor"\
                       %(cost.__repr__(), effect.__repr__(), self.bonusIF)
-        trigger = trigger_dict["TRIGGER_GRANT"]
-        super(SmallGrant, self).__init__(name, cost, description, trigger, effect)
+        super(SmallGrant, self).__init__(name, cost, description, effect)
 
     def play(self, player):
         """
@@ -196,8 +193,7 @@ class Workshop(Action):
         self.bonusIF = 1
         description = "Attend a workshop. Doesn't cost much, but don't expect getting much out of it either.\n"\
         "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
-        trigger = trigger_dict["TRIGGER_CONFERENCE"]
-        super(Workshop, self).__init__(name, cost, description, trigger, effect)
+        super(Workshop, self).__init__(name, cost, description, effect)
 
     @property
     def successMessage(self):
@@ -241,8 +237,7 @@ class Symposium(Action):
         self.bonusIF = 3
         description = "Attend a symposium. Will take some of your time but may be useful.\n"\
         "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
-        trigger = trigger_dict["TRIGGER_CONFERENCE"]
-        super(Symposium, self).__init__(name, cost, description, trigger, effect)
+        super(Symposium, self).__init__(name, cost, description, effect)
 
     @property
     def successMessage(self):
