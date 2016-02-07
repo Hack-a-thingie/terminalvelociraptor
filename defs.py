@@ -25,8 +25,7 @@ class Points(object):
                       self.APM + other.APM, \
                       self.APB + other.APB)
 
-    @property
-    def toString(self):
+    def __repr__(self):
         """ Convert the structure into an intelligible string. """
         string = "BP: %d, APG: %d, APP: %d, "\
                  "APC: %d, APM: %d, APB: %d" \
