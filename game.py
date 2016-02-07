@@ -81,18 +81,19 @@ while not gamedeck.is_empty():
 
     # Fire staff; pay staff.
     if current_player.get_staff_cost() > current_player.points.BP:
-        print "Not enough, you have to fire someone"
-        current_player.points.BP = 0
-        current_player.unit.cards.pop(0)
-    else:
-        current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
+        while current_player.get_staff_cost() > current_player.points.BP:
+            print "Not enough, you have to fire someone"
+            current_player.fire_someone()
+
+    current_player.points.BP = current_player.points.BP - current_player.get_staff_cost()
 
     # Draw a card.
     current_player.draw_card(gamedeck)
 
 #   thing = raw_input("[d] discard OR [p] play: ")
 #    thing = thing.lower()
-    thing = "p"
+
+    thing = random.choice(["p", "d"])
 
     if thing == "d":
         # EITHER Discard N cards from deck, and draw N-1 cards.
@@ -107,8 +108,9 @@ while not gamedeck.is_empty():
 
     elif thing == "p":
         # OR Play cards, as many as you want, up to existing AP and BP.
-        print "PLAY"
+        print "Playing card"
         current_player.hand.cards[0].play(current_player)
+        print "%s has now %d staff" % (current_player.name, len(current_player.unit.cards))
 
     # 'Submit manuscript' action (1BP)
     print submit_manuscript(current_player.get_staff_abilities())

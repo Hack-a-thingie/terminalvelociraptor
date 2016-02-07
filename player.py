@@ -45,3 +45,6 @@ class Player (object):
         for staff in self.unit.cards:
             total += staff.abilities
         return total
+
+    def fire_someone(self):
+        self.unit.cards.pop(0)
