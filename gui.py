@@ -5,15 +5,12 @@
 # Purpose: This file has been created during the hack-a-thingie 2016 event and
 #          will be using curses to create the terminal ui for playing the game.
 #
-#   Notes: We need to implement the following:
-#              Hand, field, description, points
-#              functions by click
+#   Notes: importing game runs the game, fix this later.
 #------------------------------------------------------------------------------#
 #!/usr/local/bin/python2
 # coding: latin-1
 
 import curses
-'''
 from game import *
 from player import *
 from deck import *
@@ -21,18 +18,22 @@ from cardpile import *
 from staff import *
 from actions import *
 from reactions import *
-'''
 
-def disp_message(bg, message):
-    while True:
-        bg.addstr(11, 59 / 2 - len(message) / 2, message)
-        bgcomm = bg.getch()
-        if bgcomm == ord(" "):
-            for i in range(1,59):
-                bg.addch(11,i, curses.ACS_HLINE)
-                bg.refresh()
-            break
+FLAG = 1
 
+# displays a message, front and center!
+def disp_message(message):
+    if FLAG == 0:
+        print message
+    if FLAG == 1:
+        while True:
+            bg.addstr(11, 59 / 2 - len(message) / 2, message)
+            bgcomm = bg.getch()
+            if bgcomm == ord(" "):
+                for i in range(1,59):
+                    bg.addch(11,i, curses.ACS_HLINE)
+                    bg.refresh()
+                break
 
 # This function places BP, BS and all AP
 def point_placement(BP, BS, phys, bio, chem, math, screen):
@@ -69,10 +70,10 @@ def point_placement(BP, BS, phys, bio, chem, math, screen):
     screen.refresh()
 
 # Chooses action
-def choose_action(act, act_list, hand, hand_h, hand_w, bg):
+def choose_action(act, act_list, hand, hand_h, hand_w, bg, index):
+    actidx = 1
     while True:
         playcomm = act.getch()
-        actidx = 1
             
         if playcomm == ord("w"):
             act.addstr(0, 6, act_list[-1], curses.A_REVERSE | curses.A_BOLD)
@@ -103,8 +104,8 @@ def choose_action(act, act_list, hand, hand_h, hand_w, bg):
                 hand.move(0,1)
                     
             elif actidx == 1:
-                pass
-                disp_message(bg, "hey")
+                #play_card(realplayer.hand.cards[index])
+                disp_message("yo")
                 for i in range(hand_w - 1):
                     for j in range(hand_h - 1):
                         hand.addch(j, i, " ")
@@ -127,8 +128,9 @@ def choose_action(act, act_list, hand, hand_h, hand_w, bg):
 description = "This card is awesome. it does a bunch of things and is super duper awesome and such."
 
 # Setting up small-scale game data to work with
-staff = ["Bob", "Alice", "Quantum Crypt", '123456789012345678901234567890']
-#realplayer.unit.cards[].
+#staff = ["Bob", "Alice", "Quantum Crypt", '123456789012345678901234567890']
+handlist = [realplayer.unit.cards[i].name 
+            for i in range(len(realplayer.unit.cards))]
 
 # Set up standard screen
 bg = curses.initscr()
@@ -169,7 +171,6 @@ center_hline = 11
 vline = 59
 
 # We need to change the names of the staff to fit into our box:
-handlist = staff
 for i in range(len(handlist)):
     if len(handlist[i]) < 76 - vline:
         print ("found")
@@ -213,9 +214,6 @@ for i in range(1,curses.COLS-2):
     if i == 20:
         bg.addch(i, vline, curses.ACS_LTEE)
         bg.addch(i, curses.COLS - 2, curses.ACS_RTEE)
-
-# Placing Action command
-#bg.addstr(22, 66, "ACTION", curses.A_BOLD)
 
 bg.refresh()
 
@@ -269,7 +267,7 @@ oppif.addstr(0,1,"IF: [")
 oppif.addch(0, vline - 3 , "]")
 
 # Now to fill the IF bar with stuff (fake IF percent)
-oppif_percent = 0.25
+oppif_percent = computer.impact / 20
 oppif_col = int(oppif_percent * 50)
 for i in range(50):
     if i < oppif_col:
@@ -290,7 +288,7 @@ meif.addstr(0,1,"IF: [")
 meif.addch(0, vline - 3 , "]")
 
 # Now to fill the IF bar with stuff (fake IF percent)
-meif_percent = 1.0
+meif_percent = realplayer.impact
 meif_col = int(meif_percent * 50)
 for i in range(50):
     if i < meif_col:
@@ -308,12 +306,12 @@ opppt_w = vline - 1
 opppt = curses.newwin(opppt_h, opppt_w, opppt_y, opppt_x)
 
 # Setting up Budget, Physics, Bio, Chem, and math with colors
-oppbp = 10
-oppbs = 20
-oppphys = 5
-oppbio = 10
-oppchem = 17
-oppmath = 7
+oppbp = computer.points.BP
+oppbs = computer.bs
+oppphys = computer.points.APP
+oppbio = computer.points.APB
+oppchem = computer.points.APB
+oppmath = computer.points.APM
 
 point_placement(oppbp, oppbs, oppphys, oppbio, oppchem, oppmath, opppt)
 
@@ -325,12 +323,12 @@ mept_w = vline - 1
 mept = curses.newwin(mept_h, mept_w, mept_y, mept_x)
 
 # Setting up Budget, Physics, Bio, Chem, and math with colors
-mebp = 0
-mebs = 1
-mephys = 5
-mebio = 0
-mechem = 7
-memath = 7
+mebp = realplayer.points.BP
+mebs = realplayer.bs
+mephys = realplayer.points.APP
+mebio = realplayer.points.APB
+mechem = realplayer.points.APC
+memath = realplayer.points.APM
 
 point_placement(mebp, mebs, mephys, mebio, mechem, memath, mept)
 
@@ -394,7 +392,7 @@ while True:
             act_str = act_list[1]
 
             act.move(1,6)
-            choose_action(act, act_list, hand, hand_h, hand_w, bg)
+            choose_action(act, act_list, hand, hand_h, hand_w, bg, index)
             index = 0
             prev = 0
 
