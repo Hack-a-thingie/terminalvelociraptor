@@ -12,6 +12,8 @@
 #!/usr/local/bin/python2
 # coding: latin-1
 
+import curses
+
 # This function places BP, BS and all AP
 def point_placement(BP, BS, phys, bio, chem, math, screen):
     if curses.has_colors() == True:
@@ -46,8 +48,58 @@ def point_placement(BP, BS, phys, bio, chem, math, screen):
 
     screen.refresh()
 
+# Chooses action
+def choose_action(act, act_list, hand, hand_h, hand_w):
+    while True:
+        playcomm = act.getch()
+            
+        if playcomm == ord("w"):
+            act.addstr(0, 6, act_list[-1], curses.A_REVERSE | curses.A_BOLD)
+            act.addstr(1, 6, act_list[2], curses.A_BOLD)
+            act.move(0,6)
+            actidx = 0
+            act.refresh()
+                
+        if playcomm == ord("s"):
+            act.addstr(0, 6, act_list[-1], curses.A_BOLD)
+            act.addstr(1, 6, act_list[2], curses.A_REVERSE | curses.A_BOLD)
+            act.move(1,6)
+            actidx = 1
+            act.refresh()
 
-import curses
+        if playcomm == ord(" "):
+            act.addstr(0,6,"        ")
+            act.addstr(1,6,act_list[1], curses.A_BOLD)
+            if actidx == 0:
+                for i in range(hand_w - 1):
+                    for j in range(hand_h - 1):
+                        hand.addch(j, i, " ")
+                for i in range(len(stafflist)):
+                    if i == 0:
+                        hand.addstr(i, 1, stafflist[i], curses.A_REVERSE)
+                    else:
+                        hand.addstr(i, 1, stafflist[i])
+                hand.move(0,1)
+                    
+            else:
+                pass
+                for i in range(hand_w - 1):
+                    for j in range(hand_h - 1):
+                        hand.addch(j, i, " ")
+                for i in range(len(stafflist)):
+                    if i == 0:
+                        hand.addstr(i, 1, stafflist[i], curses.A_REVERSE)
+                    else:
+                        hand.addstr(i, 1, stafflist[i])
+                hand.move(0,1)
+
+            act.refresh()
+            break
+
+
+# creating dummy description:
+
+description = "This card is awesome. it does a bunch of things and is super duper awesome and such."
 
 # Setting up small-scale game data to work with
 staff = ["Bob", "Alice", "Quantum Crypt", '123456789012345678901234567890']
@@ -169,7 +221,7 @@ act_w = 18
 act = curses.newwin(act_h, act_w, act_y, act_x)
 
 # creating an act_string list
-act_list = ['ACTION ', 'SELECT ', ' PLAY  ', 'DISCARD']
+act_list = ['ACTION ', 'SELECT ', ' PLAY  ', 'DISCARD', 'RETURN']
 act_str = act_list[1]
 
 act.addstr(1, 6, act_str, curses.A_BOLD)
@@ -247,11 +299,11 @@ mept_w = vline - 1
 mept = curses.newwin(mept_h, mept_w, mept_y, mept_x)
 
 # Setting up Budget, Physics, Bio, Chem, and math with colors
-mebp = 10
-mebs = 20
+mebp = 0
+mebs = 1
 mephys = 5
-mebio = 10
-mechem = 17
+mebio = 0
+mechem = 7
 memath = 7
 
 point_placement(mebp, mebs, mephys, mebio, mechem, memath, mept)
@@ -288,13 +340,43 @@ while True:
 
     if command == ord(" "):
         if act_str == act_list[1]:
-            act.addstr(1, 6, act_str, curses.A_BOLD)   
+            # prints description
+            act.addstr(0, 6, act_list[-1], curses.A_BOLD)
+            act.addstr(1, 6, act_list[2], curses.A_BOLD | curses.A_REVERSE)   
             act.refresh()
-            act_str = act_list[2]
+            hand.addstr(0, 1, stafflist[index], curses.A_REVERSE)
+            for i in range(77-vline):
+                hand.addch(1,i, curses.ACS_HLINE)
+            words = description.split()
+            desc_idx = 0
+            line = ""
+            for word in words:
+                if len(line) + len(word) + 1 < 76-vline:
+                    line = line + word + " "
+                    if word == words[-1]:
+                        hand.addstr(2 + desc_idx, 1, line)
+                else:
+                    for i in range (76-vline-len(line)):
+                        line = line + " "
+                    hand.addstr(2 + desc_idx, 1, line)
+                    line = word + " "
+                    desc_idx = desc_idx + 1
+                    if word == words[-1]:
+                        hand.addstr(2 + desc_idx, 1, line)
+
+            hand.refresh()
+            act_str = act_list[1]
+
+            act.move(1,6)
+            choose_action(act, act_list, hand, hand_h, hand_w)
+            index = 0
+            prev = 0
+
         else:
             act.addstr(1, 6, act_str, curses.A_BOLD)   
             act.refresh()
             act_str = act_list[1]
+        
 
     if command == ord("q"):
         break
