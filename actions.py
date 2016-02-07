@@ -66,34 +66,3 @@ class BigGrant(Action):
             return True
         else:
             return False
-
-
-
-
-def boom(self, player, dmg):
-    player.points.APB = player.points.APB - dmg
-    if player.points.APB < 0:
-        player.points.APB = 0
-
-
-Action.play = classmethod(boom)
-
-def my_action():
-    print 12
-
-my_action_card = Action("Adi's wrath", defs.Points(0, 0, 0, 0, 0, 0), "", my_action)
-#my_action_card.play(1)
-player1 = Player("Irina")
-player1.points.APB = 12
-print player1.points.APB
-grant = BigGrant()
-print grant.description
-resources = defs.Points(0,13,0,0,0, 0)
-player1.points = resources
-print resources
-print grant.cost
-print resources >=grant.cost
-if grant.play(player1):
-    print grant.successMessage
-else:
-    print grant.failureMessage
