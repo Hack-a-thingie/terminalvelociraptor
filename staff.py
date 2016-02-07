@@ -14,7 +14,6 @@ class Staff(Card):
         super(Staff, self).__init__(name, cost, description)
         self.original_abilities = abilities
         self.abilities = abilities
-        self.played = False
         self.category = random.choice(["PhD", "Udg", "MSc", "Doc", "Tch", "SSc", "Vis", "R.A"])
         self.face = random.choice(["@", "Ô ", "Ō", "Ö", "Ò", "Ó", "Ø", "Õ", "█", "ð", "©", "®"])
         self.hat = random.choice(["!", "? ", "$", ""])
@@ -28,10 +27,10 @@ class Staff(Card):
         return "\n  %s  \n  %s  \n╔═══╗\n║%s║\n%s" % (self.hat, self.face, self.category, abilities)
 
     def play(self, player):
-        self.played = True
+        self.abilities = self.original_abilities
         player.remove_from_hand(self)
         player.unit.add_card(self)
-        trigger_happened(player,trigger_dict["TRIGGER_HIRE"])
+        trigger_happened(player, trigger_dict["TRIGGER_HIRE"])
 
     def buffs(self, buff):
         self.abilities += buff

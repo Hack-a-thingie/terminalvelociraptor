@@ -10,9 +10,11 @@ from deck import *
 import random
 
 
-
 realplayer = Player("PLAYER")
 computer = Player("CPU")
+
+players.append(realplayer)
+players.append(computer)
 
 
 ## INITIALISE GAME
@@ -29,7 +31,6 @@ gamedeck.shuffle()
 won = 0
 
 # Randomise player order
-players = [realplayer, computer]
 random.shuffle(players)
 
 # Draw 5 cards each (from common pile)
