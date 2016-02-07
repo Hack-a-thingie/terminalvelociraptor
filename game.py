@@ -107,6 +107,7 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
     if thing == "y":
         if current_player.points.BP > 0:
             current_player.impact += submit_manuscript(current_player.get_staff_abilities());
+            trigger_happened(current_player,trigger_dict["TRIGGER_PUBLISH"])
         else:
             print "Not enough budget."
 
