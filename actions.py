@@ -12,9 +12,10 @@ people = ["loyal dog belonging to someone", "janitor", "night guard", "cook", "a
 class Action(Card):
     """ Mother class for all action cards
     """
-    def __init__(self, name, cost, description, effect):
+    def __init__(self, name, cost, description, trigger, effect):
         super(Action, self).__init__(name, cost, description)
         self.effect = effect
+        self.trigger = trigger
 
     def play(self, player):
         super(Action, self).play(player)
@@ -47,7 +48,8 @@ class BigGrant(Action):
         "Cost: %s.\nYou gain: %s, %d bonus budget slot%s and %d additional impact factor"\
                       %(cost.__repr__(), effect.__repr__(), self.bonusBS, \
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
-        super(BigGrant, self).__init__(name, cost, description, effect)
+        trigger = trigger_dict["TRIGGER_GRANT"]
+        super(BigGrant, self).__init__(name, cost, description, effect, trigger)
 
     def play(self, player):
         """
@@ -101,13 +103,6 @@ class MediumGrant(Action):
                         '' if self.bonusBS == 1 else 's', self.bonusIF)
         super(MediumGrant, self).__init__(name, cost, description, effect)
 
-    # def is_playable(self, player):
-    #     """
-    #     :param player: The player who is attempting to play the card
-    #     :return: True if the card is ok to play and False otherwise
-    #     """
-    #     return True if player.points>=self.cost else False
-
     def play(self, player):
         """
         :param player: Player who is playing the card
@@ -156,14 +151,8 @@ class SmallGrant(Action):
         "Requires a bit of time, but your lab gets some change from the grandma.\n"\
         "Cost: %s.\nYou gain: %s and %d additional impact factor"\
                       %(cost.__repr__(), effect.__repr__(), self.bonusIF)
-        super(SmallGrant, self).__init__(name, cost, description, effect)
-
-    # def is_playable(self, player):
-    #     """
-    #     :param player: The player who is attempting to play the card
-    #     :return: True if the card is ok to play and False otherwise
-    #     """
-    #     return True if player.points>=self.cost else False
+        trigger = trigger_dict["TRIGGER_GRANT"]
+        super(SmallGrant, self).__init__(name, cost, description, trigger, effect)
 
     def play(self, player):
         """
@@ -207,7 +196,8 @@ class Workshop(Action):
         self.bonusIF = 1
         description = "Attend a workshop. Doesn't cost much, but don't expect getting much out of it either.\n"\
         "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
-        super(Workshop, self).__init__(name, cost, description, effect)
+        trigger = trigger_dict["TRIGGER_CONFERENCE"]
+        super(Workshop, self).__init__(name, cost, description, trigger, effect)
 
     @property
     def successMessage(self):
@@ -224,13 +214,6 @@ class Workshop(Action):
         :return:  Message which can be displayed in case of failure
         """
         return "Unfortunately, you didn't meet anyone important."
-
-    # def is_playable(self, player):
-    #     """
-    #     :param player: The player who is attempting to play the card
-    #     :return: True if the card is ok to play and False otherwise
-    #     """
-    #     return True if player.points>=self.cost else False
 
     def play(self, player):
         """
@@ -249,7 +232,7 @@ class Workshop(Action):
             return False
 
 class Symposium(Action):
-    """ Attend a workshop
+    """ Attend a symposium
     """
     def __init__(self):
         name = "Attend a symposium"
@@ -258,7 +241,8 @@ class Symposium(Action):
         self.bonusIF = 3
         description = "Attend a symposium. Will take some of your time but may be useful.\n"\
         "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
-        super(Symposium, self).__init__(name, cost, description, effect)
+        trigger = trigger_dict["TRIGGER_CONFERENCE"]
+        super(Symposium, self).__init__(name, cost, description, trigger, effect)
 
     @property
     def successMessage(self):
@@ -276,19 +260,56 @@ class Symposium(Action):
         """
         return "Unfortunately, you didn't meet anyone important."
 
-    # def is_playable(self, player):
-    #     """
-    #     :param player: The player who is attempting to play the card
-    #     :return: True if the card is ok to play and False otherwise
-    #     """
-    #     return True if player.points>=self.cost else False
-
     def play(self, player):
         """
         :param player: Player who is playing the card
         :return: True if success and False if failure
         """
         super(Symposium, self).play(player)
+        # TODO: Test trigger
+        if self.is_playable(player):
+            player.points = player.points + self.effect
+            player.impact += self.bonusIF
+            trigger_happened(player, trigger_dict["TRIGGER_CONFERENCE"])
+            return True
+        else:
+            return False
+
+class Conference(Action):
+    """ Attend a workshop
+    """
+    def __init__(self):
+        name = "Attend a conference"
+        cost = defs.Points(3, 7, 0, 0, 0, 0)
+        effect = defs.Points(0, 0, 0, 0, 0, 0)
+        self.bonusIF = 5
+        description = "Attend a conference. Time-consuming, but very useful networking event.\n"\
+                      "Sometime they even provide free coffee!\n"\
+        "Cost: %s. You gain %d bonus impact factor."%(cost.__repr__(), self.bonusIF)
+        super(Conference, self).__init__(name, cost, description, effect)
+
+    @property
+    def successMessage(self):
+        """
+        :return: Message which can be displayed in case of success
+        """
+        curP = random.randint(math.floor(len(people)/2), len(people)-1)
+        return "Congratulations! You met a %s from one of the top universities!\n"\
+                "You were mentioned in their Twitter and your impact factor has soared up!"%(people[curP])
+
+    @property
+    def failureMessage(self):
+        """
+        :return:  Message which can be displayed in case of failure
+        """
+        return "Unfortunately, you didn't meet anyone important."
+
+    def play(self, player):
+        """
+        :param player: Player who is playing the card
+        :return: True if success and False if failure
+        """
+        super(Conference, self).play(player)
         # TODO: Test trigger
         if self.is_playable(player):
             player.points = player.points + self.effect
