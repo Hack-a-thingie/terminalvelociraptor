@@ -118,6 +118,31 @@ while not gamedeck.is_empty() and turn < 1000:
     # 'Submit manuscript' action (1BP)
     #print submit_manuscript(current_player.get_staff_abilities())
 
+    # thing = raw_input("Do you want to publish your.. 'results'? (1 BP) [y] yes OR [n] no: ")
+    # thing = thing.lower()
+
+    thing = random.choice(["y", "n"])
+    if thing == "y":
+        if current_player.points.BP > 0:
+            current_player.impact += submit_manuscript(current_player.get_staff_abilities());
+        else:
+            print "Not enough budget."
+
+    elif thing == "n":
+        print "And you're calling yourself a PI.."
+
+    print "%s has now %d IF" % (current_player.name, current_player.impact)
+
+    if current_player.impact >= 10:
+        won = 1
+        print "%s has won since it now has %d IF. Woo!.." % (current_player.name, current_player.impact)
+
+    if current_player.bs == 0:
+        won = 1
+        other_id = (current_id + 1) % 2
+        other_player = players[other_id]
+        print "%s has won since %s ran out of budget. Boo!.." % (other_player.name, current_player.name)
+
 print "\n\nGAME OVER\n\n"
 
 print "deck: %s " % len(gamedeck.cards),
