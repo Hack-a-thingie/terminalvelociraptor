@@ -45,10 +45,22 @@ class Reaction(Card):
         self.effect = effect
 
     def play(self, player):
-        player.remove_from_hand(self)
-        player.reactions.add_card(self)
+        # TODO: Add trigger
+        if self.is_playable(player):
+            player.remove_from_hand(self)
+            player.reactions.add_card(self)
+            return True
+        else:
+            return False
 
     def reveal(self, player):
         player.reactions.remove_card(self)
+        # TODO: need to discard to graveyard
         print self.effect
+
+    def is_playable(self, player):
+        if player.points >= self.cost and len(player.reactions.cards) < 3:
+            return True
+        else:
+            False
 

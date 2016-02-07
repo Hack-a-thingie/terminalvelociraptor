@@ -1,4 +1,4 @@
-
+import random
 from defs import *
 
 

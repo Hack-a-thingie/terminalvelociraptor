@@ -56,7 +56,8 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
     print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
     print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
 
-    total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(computer.hand.cards) + len(computer.unit.cards)
+    total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) \
+                  + len(computer.hand.cards) + len(computer.unit.cards)
     print "TOTAL CARDS = %d" % total_cards
 
     # Gain 1 BS (up to a maximum of 5).  !! max val TBD
@@ -107,8 +108,8 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
     thing = random.choice(["y", "n"])
     if thing == "y":
         if current_player.points.BP > 0:
-            current_player.impact += submit_manuscript(current_player.get_staff_abilities());
-            trigger_happened(current_player,trigger_dict["TRIGGER_PUBLISH"])
+            current_player.impact += submit_manuscript(current_player.get_staff_abilities())
+            trigger_happened(current_player, trigger_dict["TRIGGER_PUBLISH"])
         else:
             print "Not enough budget."
 
@@ -134,7 +135,8 @@ print "discard: %s " % len(graveyard.cards),
 print "%s: (h=%d, u=%d) " % (realplayer.name, len(realplayer.hand.cards), len(realplayer.unit.cards)),
 print "%s: (h=%d, u=%d) " % (computer.name, len(computer.hand.cards), len(computer.unit.cards))
 
-total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) + len(computer.hand.cards) + len(computer.unit.cards)
+total_cards = len(gamedeck.cards) + len(graveyard.cards) + len(realplayer.hand.cards) + len(realplayer.unit.cards) \
+              + len(computer.hand.cards) + len(computer.unit.cards)
 print "TOTAL CARDS = %d" % total_cards
 
 # Cards to be discarded at any time, if number of cards in hand exceeds maximum of 10 cards. !! max TBD

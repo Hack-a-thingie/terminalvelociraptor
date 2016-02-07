@@ -46,12 +46,12 @@ class BigGrant(Action):
                       %(cost.__repr__(), effect.__repr__(), self.bonusBS, '' if self.bonusBS == 1 else 's')
         super(BigGrant, self).__init__(name, cost, description, effect)
 
-    def isPlayable(self, player):
+    def is_playable(self, player):
         """
         :param player: The player who is attempting to play the card
         :return: True if the card is ok to play and False otherwise
         """
-        return True if player.points>=self.cost else False
+        return True if player.points >= self.cost else False
 
     def play(self, player):
         """
@@ -59,7 +59,9 @@ class BigGrant(Action):
         :return: True if success and False if failure
         """
         # TODO: Add trigger
-        if self.isPlayable(player):
+        if self.is_playable(player):
+            player.remove_from_hand(self)
+            # TODO: need to discard to graveyard
             player.points = player.points - self.cost
             player.points = player.points + self.effect
             player.bs += self.bonusBS
