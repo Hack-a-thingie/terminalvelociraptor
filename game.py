@@ -45,7 +45,7 @@ players[1].bs = 2
 
 # TURN
 turn = 0
-while not gamedeck.is_empty() and turn < 1000 and not won:
+while turn < 50 and not won:
     turn += 1
     current_player = players[turn % 2]
 
@@ -87,14 +87,14 @@ while not gamedeck.is_empty() and turn < 1000 and not won:
         print "Discarding %d cards" % n_cards_discard
         for i in range(n_cards_discard):
             current_player.discard_card(graveyard)
-            print "%s %s" % (i, len(current_player.hand.cards))
+            #print "%s %s" % (i, len(current_player.hand.cards))
 
         for i in range(n_cards_discard-1):
             current_player.draw_card(gamedeck)
 
     elif thing == "p":
         # OR Play cards, as many as you want, up to existing AP and BP.
-        print "Playing card"
+        print "Playing card " + current_player.hand.cards[0].name
         current_player.hand.cards[0].play(current_player)
         for staff in current_player.unit.cards:
             print staff

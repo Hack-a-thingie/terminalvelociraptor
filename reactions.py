@@ -62,5 +62,5 @@ class Reaction(Card):
         if player.points >= self.cost and len(player.reactions.cards) < 3:
             return True
         else:
-            False
+            return False
 
